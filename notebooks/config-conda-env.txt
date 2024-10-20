@@ -1,0 +1,3 @@
+conda create --name webscraping python=3.11.9
+conda activate webscraping
+pip install requests beautifulsoup4 selenium pandas tqdm
