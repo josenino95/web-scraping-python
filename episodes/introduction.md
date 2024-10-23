@@ -1,7 +1,7 @@
 ---
-title: "Using Markdown"
-teaching: 10
-exercises: 2
+title: "Hello-Scraping"
+teaching: 40
+exercises: 20
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
@@ -16,6 +16,47 @@ exercises: 2
 - Demonstrate how to include pieces of code, figures, and nested challenge blocks
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Introduction
+
+This is part 2 of an Introduction to Web Scraping workshop we offered on February 2024. You can refer to those [workshop materials](https://ucsbcarpentry.github.io/2024-02-27-ucsb-webscraping/) to have a more gentle introduction to scraping using XPath and the `Scraper` Chrome extension.
+
+We'll refresh some of the concepts covered there to have a practical understanding of how content/data is structured in a website. For that purpose, we'll see what Hypertext Markup Language (HTML) is and how it structures and formats the content using `tags`. From there, we'll use the BeautifulSoup library to parse the HTML content so we can easily search and access elements of the website we are interested in. Starting from basic examples, we'll move to scrape more complex, real-life websites.
+
+## HTML quick overview
+
+All websites have Hypertext Markup Language (HTML) behind them. The following text is HTML for a very simple website, with only three sentences. If you read it, can you imagine how that website looks?
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sample web page</title>
+</head>
+<body>
+<h1>h1 Header #1</h1>
+<p>This is a paragraph tag</p>
+<h2>h2 Sub-header</h2>
+<p>A new paragraph, now in the <b>sub-header</b></p>
+<h1>h1 Header #2</h1>
+<p>
+This other paragraph has two  hyperlinks,
+one to <a href="https://carpentries.org/">The Carpentries homepage</a>,
+and another to the
+<a href="https://carpentries.org/past_workshops/">past workshops</a> page.
+</p>
+</body>
+</html>
+```
+
+Well, if you put that text in a file with a .html extension, the job of your web browser when opening the file will be to interpret that (markup) language and display a nicely formatted website.
+
+![](fig/simple_website.PNG){alt="Screenshot of a simple website with the previews HTML"}
+
+HTML is composed of tags
+
+
+
 
 ## Introduction
 

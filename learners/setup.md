@@ -2,8 +2,9 @@
 title: Setup
 ---
 
-FIXME: Setup instructions live in this document. Please specify the tools and
-the data sets the Learner needs to have installed.
+FIXME: 
+- Python, Jupyter notebook, libraries: b4s, requests, selenium, pandas
+- Google Chrome
 
 ## Data Sets
 
