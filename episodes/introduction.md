@@ -25,7 +25,7 @@ We'll refresh some of the concepts covered there to have a practical understandi
 
 ## HTML quick overview
 
-All websites have Hypertext Markup Language (HTML) behind them. The following text is HTML for a very simple website, with only three sentences. If you read it, can you imagine how that website looks?
+All websites have a Hypertext Markup Language (HTML) document behind them. The following text is HTML for a very simple website, with only three sentences. If you read it, can you imagine how that website looks?
 
 ```html
 <!DOCTYPE html>
@@ -34,13 +34,13 @@ All websites have Hypertext Markup Language (HTML) behind them. The following te
 <title>Sample web page</title>
 </head>
 <body>
-<h1>h1 Header #1</h1>
+<h1 id="head1">h1 Header #1</h1>
 <p>This is a paragraph tag</p>
-<h2>h2 Sub-header</h2>
+<h2 id="subhead1">h2 Sub-header</h2>
 <p>A new paragraph, now in the <b>sub-header</b></p>
-<h1>h1 Header #2</h1>
+<h1 id="head2">h1 Header #2</h1>
 <p>
-This other paragraph has two  hyperlinks,
+This other paragraph has two hyperlinks,
 one to <a href="https://carpentries.org/">The Carpentries homepage</a>,
 and another to the
 <a href="https://carpentries.org/past_workshops/">past workshops</a> page.
@@ -53,12 +53,34 @@ Well, if you put that text in a file with a .html extension, the job of your web
 
 ![](fig/simple_website.PNG){alt="Screenshot of a simple website with the previews HTML"}
 
-HTML is composed of tags
+An HTML document is composed of elements, which can be identified by tags written inside angle brackets (`<` and `>`). For example, the HTML root element, which delimits the beginning and end of an HTML document, is identified by the `<html>` tag.
+
+Most elements have both a opening and a closing tag, determining the span of the element. In the previous simple website, we see a head element that goes from the opening tag `<head>` up to the closing tag `</head>`. Given than an element can be inside another element, an HTML document has a tree structure, where every element is a node that can contain child nodes, like the following image shows.
+
+![The Document Object Model (DOM) that represents an HTML document with a tree structure. Source: Wikipedia. Author: Birger Eriksson](https://upload.wikimedia.org/wikipedia/commons/5/5a/DOM-model.svg){alt="Screenshot of a simple website with the previews HTML"}
+
+Finally, we can define or modify the behavior, appeareance, or functionality of an element by using attributes. Attributes are inside the opening tag, and consist of a name and a value, formatted as `name="value"`. For example, we can give an unique id to any element using the `id` attribute.
+
+Here is a non-exhaustive list of elements you'll find in HTML and their purpose:
+
+- `<hmtl>...</html>` The root, which contains the entirety of the document.
+- `<head>...</head>` Contains metadata, for example, the title that the web browser displays.
+- `<body>...</body>` The content that is going to be displayed.
+- `<h1>...</h1>, <h2>...</h2>, <h3>...</h3>` Defines headers of level 1, 2, 3, etc.
+- `<p>...</p>` A paragraph.
+- `<a href="">...</a>` Creates a hyperlink, and we provide the destination URL with the `href` attribute.
+- `<img src="" alt="">` Embedds an image, giving a source to the image with the `src` attribute and specifying alternate text with `alt`.
+- `<table>...</table>, <th>...</th>, <tr>...</tr>, <td>...</td>` Defines a table, that as children will have a header (defined inside `th`), rows (defined inside `tr`), and a cell inside a row (as `td`).
+- `<div>...</div>` Is used to group sections of HTML content.
+- `<script>...</script>` Embeds or references JavaScript code.
+
+To summarize, an *element*  is identified by *tags* , and we can assign properties to an element by using *attributes*. Knowing this about HTML will make our lifes easier when trying to get some specific data from a website.
 
 
+## Parsing HTML with BeautifulSoup
 
+Now that we know how a website is structured, we can start extracting information from it
 
-## Introduction
 
 This is a lesson created via The Carpentries Workbench. It is written in
 [Pandoc-flavored Markdown](https://pandoc.org/MANUAL.txt) for static files and
