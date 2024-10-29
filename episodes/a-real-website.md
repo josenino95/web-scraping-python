@@ -1,6 +1,6 @@
 ---
 title: "Scraping a real website"
-teaching: 30
+teaching: 40
 exercises: 15
 ---
 
@@ -249,21 +249,175 @@ for row in workshops_table.find_all('tr'):
 	dict_w['date'] = third_cell.get_text(strip=True)
 	list_of_workshops.append(dict_w)
 
-result_df = pd.DataFrame(list_of_workshops)
+upcomingworkshops_df = pd.DataFrame(list_of_workshops)
 ```
 
+A key takeaway from this exercise is that, when we want to scrape data in a structured way, we have to spend some time getting to know how the website is structured and how we can identify and extract only the elements we are interested in.
 
-We can obtain the exact same result only using the find_all and find methods
+::::::::::::::::::::::::::::::::::::: challenge
 
+Extract the same information as in the previous exercise, but this time from the Past Workshops Page at [https://carpentries.org/past_workshops/](https://carpentries.org/past_workshops/). Which 5 countries have held the most workshops, and how many has each held?
+
+:::::::::::::::::::::::: solution
+
+We can reuse directly the code we wrote before, changing only the URL we got the HTML from.
+
+```python
+url = 'https://carpentries.org/past_workshops/'
+req = requests.get(url).text
+cleaned_req = re.sub(r'\s*\n\s*', '', req).strip()
+
+soup = BeautifulSoup(cleaned_req, 'html.parser')
+workshops_table = soup.find('table')
+
+list_of_workshops = []
+for row in workshops_table.find_all('tr'):
+	cells = row.find_all('td')
+	first_cell = cells[0]
+	second_cell = cells[1]
+	third_cell = cells[2]
+	dict_w = {}
+	dict_w['type'] = first_cell.find('img')['title']
+	dict_w['country'] = second_cell.find('img')['title']
+	dict_w['link'] = second_cell.find('a')['href']
+	dict_w['host'] = second_cell.find('a').get_text()
+	dict_w['all_text'] = second_cell.get_text(strip=True)
+	dict_w['date'] = third_cell.get_text(strip=True)
+	list_of_workshops.append(dict_w)
+
+pastworkshops_df = pd.DataFrame(list_of_workshops)
+
+print('Total number of workshops in the table: ', len(pastworkshops_df))
+
+print('Top 5 of countries by number of workshops held: \n',
+      pastworkshops_df['location'].value_counts().head())
+```
+
+```output
+Total number of workshops in the table:  3830
+Top 5 of countries by number of workshops held: 
+ country
+US    1837
+GB     468
+AU     334
+CA     225
+DE     172
+Name: count, dtype: int64
+```
+
+:::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+For a more challenging exercise, try to add to our output dataframe if the workshop was held online or not.
+
+You'll notice from the website that the online workshops have a world icon next between the country flag and the name of the institution that hosts the workshop. 
+
+:::::::::::::::::::::::: solution
+
+To start, we can see in the HTML document that the world icon is in the second data cell of a row. Additionally, for those workshops that are online, there is an additional image element with these attributes `<img title="Online" alt="globe image" class="flags"/>`. So we could search if the second data cell has an element with an attribute of `title="Online"`. If it doesn't, the `.find()` method would return nothing, what in Python is called a "NoneType" data type. So if `.find()` returns None, we should fill the respective cell in our dataframe with a "No", meaning that the workshop not held online, and in the opposite case fill it with a "Yes". Here is a possible code solution, which you would add to the previous code where we extracted the other data and created the dataframe.
+
+```python
+if second_cell.find(title="Online") == None:
+  online_value = "No"
+else:
+  online_value = "Yes"
+dict_w['online'] = online_value
+```
+
+:::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Automating data collection
 
-Going to the 
+Until now we've only scraped one website at a time. But there may be situations where the information you need will be split in different pages, or where you have to follow a trace of hyperlinks. With the tools we've learned until now, this new task is straightforward. We would have to add a loop that goes to those other pages, gets the HTML document using the `requests` package, and parses the HTML with `BeautifulSoup` to extract the required information. 
 
-When we want to extract information form a website, we need to understand how the website is structured, how we can identify the elements we want
+The additional and important step to consider in this task is to add a wait time between each request to the website, so we don't overload the web server that is providing us the information we need. If we send too many requests in a short period of time, we can prevent other “normal” users from accessing the site during that time, or even cause the server to run out of resources and crash. If the provider of the website detects an excessive use, it could block our computer from accessing that website, or even take legal action in extreme cases.
 
+To make sure we don't crash the server, we can add a wait time between each step of our loop with the built-in Python module `time` and its `sleep()` function. With this function, Python will wait for the specified number of seconds before continuing to execute the next line of code. For example, when you run the following code, Python will wait 10 seconds between each print execution.
 
+```python
+from time import sleep
+print('First')
+sleep(10)
+print('Second')
+```
 
+Let's incorporate this important principle for extracting additional information from each of our workshop websites in the upcoming list. We already have our `upcomingworkshops_df` dataframe, and in there, a `link` column with the URL to the website for each individual workshop. For example, let's make a request for the HTML of the first workshop in the dataframe, and take a look.
+
+```python
+first_url = upcomingworkshops_df.loc[0, 'link']
+print("URL we are visiting: ", first_url)
+
+req = requests.get(first_url).text
+cleaned_req = re.sub(r'\s*\n\s*', '', req).strip()
+
+soup = BeautifulSoup(cleaned_req, 'html.parser')
+print(soup.prettify())
+```
+
+If we explore the HTML this way, or using the 'View page source' in the browser, we notice something interesting in the `<head>` element. As this information is inside `<head>` instead of the `<body>` element, it won't be displayed in our browser when we visit the page, but the meta elements will provide metadata for search engines to better understand, display, and index the page. Each of this `<meta>` tags contain useful information for our table of workshops, for example, a well formatted start and end date, the exact location of the workshop with latitude and longitude (for those not online), the language in which it will be taught, and a more structured way of listing instructors and helpers. This is precisely the information we will extract with the following code.
+
+```python
+# List of URLs in our dataframe
+urls = list(upcomingworkshops_df.loc[:, 'link'])
+
+# Start an empty list to store the different dictionaries with our data
+list_of_workshops = []
+
+# Start a loop over each URL
+for item in tqdm(urls):
+    # Get the HTML and parse it
+    req = requests.get(item).text
+    cleaned_req = re.sub(r'\s*\n\s*', '', req).strip()
+    soup = BeautifulSoup(cleaned_req, 'html.parser')
+
+    # Start an empty dictionary and fill it with the URL, which
+    # is our identifier with our other dataframe
+    dict_w = {}
+    dict_w['link'] = item
+
+    # Use the find function to search for the <meta> tag that 
+    # has each specific name attribute and get the value in the
+    # content attribute
+    dict_w['startdate'] = soup.find('meta', attrs ={'name': 'startdate'})['content']
+    dict_w['enddate'] = soup.find('meta', attrs ={'name': 'enddate'})['content']
+    dict_w['language'] = soup.find('meta', attrs ={'name': 'language'})['content']
+    dict_w['latlng'] = soup.find('meta', attrs ={'name': 'latlng'})['content']
+    dict_w['instructor'] = soup.find('meta', attrs ={'name': 'instructor'})['content']
+    dict_w['helper'] = soup.find('meta', attrs ={'name': 'helper'})['content']
+
+    # Append to our list
+    list_of_workshops.append(dict_w)
+
+    # Be respectful, wait at least 3 seconds before a new request
+    sleep(3)
+
+extradata_upcoming_df = pd.DataFrame(list_of_workshops)
+```
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+It is possible that you received an error when executing the previous block code, and the most probable reason is that the URL your tried to visit didn't exist. This is known as 404 code error, that indicates the requested page cannot be found on the server. What would be your approach to work around this possible error?
+
+:::::::::::::::::::::::: solution
+
+A Pythonic crude way of working around any error for a given URL would be to use a [try and except block](https://docs.python.org/3/tutorial/errors.html), for which you would ignore any URL that throws an error and continue with the next one.
+
+A more stylish way to deal when a web page doesn't exist is to get the actual response code when `requests` tries to reach the page. If you receive a 200 code, it means the request was successful. In any other case, you'd want to store the code and skip the scraping of that page. The code you'd use to get the response code is:
+
+```python
+req = requests.get(url)
+print(req.status_code)
+```
+
+:::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
