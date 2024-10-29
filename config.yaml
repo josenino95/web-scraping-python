@@ -68,6 +68,7 @@ contact: 'jose_nino@ucsb.edu' # FIXME
 episodes: 
 - hello-scraping.md
 - a-real-website.md
+- dynamic-websites.md
 
 # Information for Learners
 learners: 
