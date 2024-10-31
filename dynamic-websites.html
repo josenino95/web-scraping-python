@@ -234,7 +234,8 @@
 
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#to-do">To-do</a></li>
+        <ul><li><a href="#you-see-it-but-the-html-doesnt-have-it">You see it but the HTML doesn’t have it!</a></li>
+<li><a href="#using-selenium-to-scrape-dynamic-websites">Using Selenium to scrape dynamic websites</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -299,7 +300,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Dynamic websites</h1>
-        <p>Last updated on 2024-10-29 |
+        <p>Last updated on 2024-10-31 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/dynamic-websites.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -335,9 +336,47 @@ challenge blocks</li>
 </div>
 </div>
 </div>
-<section><h2 class="section-heading" id="to-do">To-do<a class="anchor" aria-label="anchor" href="#to-do"></a></h2>
-<hr class="half-width"><p>To-do</p>
-<div id="keypoints1" class="callout keypoints">
+<section><h2 class="section-heading" id="you-see-it-but-the-html-doesnt-have-it">You see it but the HTML doesn’t have it!<a class="anchor" aria-label="anchor" href="#you-see-it-but-the-html-doesnt-have-it"></a></h2>
+<hr class="half-width"><p>Visit the following webpage created by Hartley Brody for the purpose
+of learning and practicing web scraping: <a href="https://www.scrapethissite.com/pages/ajax-javascript/" class="external-link">https://www.scrapethissite.com/pages/ajax-javascript/</a>
+(read first the <a href="https://www.scrapethissite.com/faq/" class="external-link">terms of
+use</a>). Select “2015” to see that year’s Oscar winning films. Now look
+at the HTML behind it as we’ve learned, using the “View page source”
+tool on your browser or in Python using the requests and BeautifulSoup
+packages. Can you find in any place of the HTML the best picture winner
+“Spotlight”? Can you find any other of the movies or the data from the
+table? If you can’t, how could you scrape this page?</p>
+<p>When you explore a page like this, you’ll notice that the movie data,
+including the title “Spotlight,” isn’t actually in the initial HTML
+source. This is because the website uses JavaScript to load the
+information dynamically. JavaScript is a programming language that runs
+in your browser, allowing websites to fetch, process, and display
+content on the fly, often based on user actions like clicking a button.
+When you select “2015”, the browser executes JavaScript (called by one
+of the <code>&lt;script&gt;</code> elements you see in the HTML) to
+retrieve the relevant movie information from the web server and build a
+new HTML document with actual information in the table. This makes the
+page feel more interactive, but it also means the initial HTML you see
+doesn’t contain the movie data itself.</p>
+<p>Let’s explore a new way to view HTML elements in your browser to
+better understand the differences in an HTML document before and after
+JavaScript is executed. On the Oscar winners page you just visited,
+right-click (or Control key + Click on Mac) and select “Inspect” from
+the pop-up menu, as shown in the image below. This opens DevTools on the
+side of your browser, offering a range of features for inspecting,
+debugging, and analyzing web pages in real-time. For this workshop,
+however, we’ll focus on just the “Elements” tab. In the “Elements” tab,
+you’ll see an HTML document that actually includes the table element,
+unlike what you saw in “View Page Source”. This difference is because
+“View Page Source” displays the original HTML, before any JavaScript is
+run, while “Inspect” reveals the HTML as it appears after JavaScript has
+executed.</p>
+<figure><img src="fig/inspect.png" alt="A screenshot of Google Chrome web browser, showing how to use Inspect from the Chrome DevTools" class="figure mx-auto d-block"></figure><p>As the <code>requests</code> package retrieves the source HTML, we
+need a different approach to scrape these types of websites. For this,
+we will use the <code>Selenium</code> package. But don’t forget about
+the “Inspect” tool we just learned, it will be handy when scraping.</p>
+</section><section><h2 class="section-heading" id="using-selenium-to-scrape-dynamic-websites">Using Selenium to scrape dynamic websites<a class="anchor" aria-label="anchor" href="#using-selenium-to-scrape-dynamic-websites"></a></h2>
+<hr class="half-width"><div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
 </div>
@@ -417,7 +456,7 @@ any links that you are not going to use.
   "url": "https://josenino95.github.io/web-scraping-python/dynamic-websites.html",
   "identifier": "https://josenino95.github.io/web-scraping-python/dynamic-websites.html",
   "dateCreated": "2024-09-23",
-  "dateModified": "2024-10-29",
+  "dateModified": "2024-10-31",
   "datePublished": "2024-10-31"
 }
 

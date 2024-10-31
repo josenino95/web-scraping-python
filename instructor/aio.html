@@ -389,7 +389,7 @@ real-life websites.</p>
 <hr class="half-width">
 <p>All websites have a Hypertext Markup Language (HTML) document behind
 them. The following text is HTML for a very simple website, with only
-three sentences. If you read it, can you imagine how that website
+three sentences. If you look at it, can you imagine how that website
 looks?</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">HTML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -705,7 +705,7 @@ HTML of our example.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>One way of completing the exercise is as follows.</p>
 <div class="codewrapper sourceCode" id="cb13">
@@ -1292,7 +1292,7 @@ held?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>We can reuse directly the code we wrote before, changing only the URL
 we got the HTML from.</p>
@@ -1365,7 +1365,7 @@ hosts the workshop.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>To start, we can see in the HTML document that the world icon is in
 the second data cell of a row. Additionally, for those workshops that
@@ -1524,7 +1524,7 @@ error?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>A Pythonic crude way of working around any error for a given URL
 would be to use a <a href="https://docs.python.org/3/tutorial/errors.html" class="external-link">try and except
@@ -1571,7 +1571,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-dynamic-websites"><p>Content from <a href="dynamic-websites.html">Dynamic websites</a></p>
 <hr>
-<p>Last updated on 2024-10-29 |
+<p>Last updated on 2024-10-31 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/dynamic-websites.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 35 minutes</p>
@@ -1606,10 +1606,50 @@ challenge blocks</li>
 </div>
 </div>
 </div>
-<section><h2 class="section-heading" id="to-do">To-do<a class="anchor" aria-label="anchor" href="#to-do"></a>
+<section><h2 class="section-heading" id="you-see-it-but-the-html-doesnt-have-it">You see it but the HTML doesn’t have it!<a class="anchor" aria-label="anchor" href="#you-see-it-but-the-html-doesnt-have-it"></a>
 </h2>
 <hr class="half-width">
-<p>To-do</p>
+<p>Visit the following webpage created by Hartley Brody for the purpose
+of learning and practicing web scraping: <a href="https://www.scrapethissite.com/pages/ajax-javascript/" class="external-link">https://www.scrapethissite.com/pages/ajax-javascript/</a>
+(read first the <a href="https://www.scrapethissite.com/faq/" class="external-link">terms of
+use</a>). Select “2015” to see that year’s Oscar winning films. Now look
+at the HTML behind it as we’ve learned, using the “View page source”
+tool on your browser or in Python using the requests and BeautifulSoup
+packages. Can you find in any place of the HTML the best picture winner
+“Spotlight”? Can you find any other of the movies or the data from the
+table? If you can’t, how could you scrape this page?</p>
+<p>When you explore a page like this, you’ll notice that the movie data,
+including the title “Spotlight,” isn’t actually in the initial HTML
+source. This is because the website uses JavaScript to load the
+information dynamically. JavaScript is a programming language that runs
+in your browser, allowing websites to fetch, process, and display
+content on the fly, often based on user actions like clicking a button.
+When you select “2015”, the browser executes JavaScript (called by one
+of the <code>&lt;script&gt;</code> elements you see in the HTML) to
+retrieve the relevant movie information from the web server and build a
+new HTML document with actual information in the table. This makes the
+page feel more interactive, but it also means the initial HTML you see
+doesn’t contain the movie data itself.</p>
+<p>Let’s explore a new way to view HTML elements in your browser to
+better understand the differences in an HTML document before and after
+JavaScript is executed. On the Oscar winners page you just visited,
+right-click (or Control key + Click on Mac) and select “Inspect” from
+the pop-up menu, as shown in the image below. This opens DevTools on the
+side of your browser, offering a range of features for inspecting,
+debugging, and analyzing web pages in real-time. For this workshop,
+however, we’ll focus on just the “Elements” tab. In the “Elements” tab,
+you’ll see an HTML document that actually includes the table element,
+unlike what you saw in “View Page Source”. This difference is because
+“View Page Source” displays the original HTML, before any JavaScript is
+run, while “Inspect” reveals the HTML as it appears after JavaScript has
+executed.</p>
+<figure><img src="../fig/inspect.png" alt="A screenshot of Google Chrome web browser, showing how to use Inspect from the Chrome DevTools" class="figure mx-auto d-block"></figure><p>As the <code>requests</code> package retrieves the source HTML, we
+need a different approach to scrape these types of websites. For this,
+we will use the <code>Selenium</code> package. But don’t forget about
+the “Inspect” tool we just learned, it will be handy when scraping.</p>
+</section><section><h2 class="section-heading" id="using-selenium-to-scrape-dynamic-websites">Using Selenium to scrape dynamic websites<a class="anchor" aria-label="anchor" href="#using-selenium-to-scrape-dynamic-websites"></a>
+</h2>
+<hr class="half-width">
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
