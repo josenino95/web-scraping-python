@@ -25,7 +25,7 @@ We'll refresh some of the concepts covered there to have a practical understandi
 
 ## HTML quick overview
 
-All websites have a Hypertext Markup Language (HTML) document behind them. The following text is HTML for a very simple website, with only three sentences. If you read it, can you imagine how that website looks?
+All websites have a Hypertext Markup Language (HTML) document behind them. The following text is HTML for a very simple website, with only three sentences. If you look at it, can you imagine how that website looks?
 
 ```html
 <!DOCTYPE html>
