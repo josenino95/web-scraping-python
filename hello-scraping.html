@@ -302,7 +302,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Hello-Scraping</h1>
-        <p>Last updated on 2024-10-30 |
+        <p>Last updated on 2024-10-31 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/hello-scraping.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -664,7 +664,7 @@ HTML of our example.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>One way of completing the exercise is as follows.</p>
 <div class="codewrapper sourceCode" id="cb13">
@@ -773,44 +773,54 @@ The university library is often the best place to start looking for help
 on copyright.</p>
 <p>To conclude, here is a brief code of conduct you should consider when
 doing web scraping:</p>
-<ol style="list-style-type: decimal"><li>Ask nicely. If your project requires data from a particular
+<ol style="list-style-type: decimal"><li>
+<strong>Ask nicely if you can access the data in another
+way</strong>. If your project requires data from a particular
 organisation, you can try asking them directly if they could provide you
 what you are looking for, or check if they have an API to access the
 data. With some luck, they will have the primary data that they used on
 their website in a structured format, saving you the trouble.</li>
-<li>Don’t download copies of documents that are clearly not public. For
-example, academic journal publishers often have very strict rules about
-what you can and what you cannot do with their databases. Mass
-downloading article PDFs is probably prohibited and can put you (or at
-the very least your friendly university librarian) in trouble. If your
-project requires local copies of documents (e.g. for text mining
-projects), special agreements can be reached with the publisher. The
-library is a good place to start investigating something like that.</li>
-<li>Check your local legislation. For example, certain countries have
-laws protecting personal information such as email addresses and phone
-numbers. Scraping such information, even from publicly avaialable web
-sites, can be illegal (e.g. in Australia).</li>
-<li>Don’t share downloaded content illegally. Scraping for personal
-purposes is usually OK, even if it is copyrighted information, as it
-could fall under the fair use provision of the intellectual property
-legislation. However, sharing data for which you don’t hold the right to
-share is illegal.</li>
-<li>Share what you can. If the data you scraped is in the public domain
-or you got permission to share it, then put it out there for other
-people to reuse it (e.g. on datahub.io). If you wrote a web scraper to
-access it, share its code (e.g. on GitHub) so that others can benefit
-from it.</li>
-<li>Don’t break the Internet. Not all web sites are designed to
-withstand thousands of requests per second. If you are writing a
-recursive scraper (i.e. that follows hyperlinks), test it on a smaller
-dataset first to make sure it does what it is supposed to do. Adjust the
-settings of your scraper to allow for a delay between requests. More on
-this topic on the next episode.</li>
-<li>Publish your own data in a reusable way. Don’t force others to write
-their own scrapers to get at your data. Use open and software-agnostic
-formats (e.g. JSON, XML), provide metadata (data about your data: where
-it came from, what it represents, how to use it, etc.) and make sure it
-can be indexed by search engines so that people can find it.</li>
+<li>
+<strong>Don’t download copies of documents that are clearly not
+public</strong>. For example, academic journal publishers often have
+very strict rules about what you can and what you cannot do with their
+databases. Mass downloading article PDFs is probably prohibited and can
+put you (or at the very least your friendly university librarian) in
+trouble. If your project requires local copies of documents (e.g. for
+text mining projects), special agreements can be reached with the
+publisher. The library is a good place to start investigating something
+like that.</li>
+<li>
+<strong>Check your local legislation</strong>. For example, certain
+countries have laws protecting personal information such as email
+addresses and phone numbers. Scraping such information, even from
+publicly avaialable web sites, can be illegal (e.g. in Australia).</li>
+<li>
+<strong>Don’t share downloaded content illegally</strong>. Scraping
+for personal purposes is usually OK, even if it is copyrighted
+information, as it could fall under the fair use provision of the
+intellectual property legislation. However, sharing data for which you
+don’t hold the right to share is illegal.</li>
+<li>
+<strong>Share what you can</strong>. If the data you scraped is in
+the public domain or you got permission to share it, then put it out
+there for other people to reuse it (e.g. on datahub.io). If you wrote a
+web scraper to access it, share its code (e.g. on GitHub) so that others
+can benefit from it.</li>
+<li>
+<strong>Publish your own data in a reusable way</strong>. Don’t
+force others to write their own scrapers to get at your data. Use open
+and software-agnostic formats (e.g. JSON, XML), provide metadata (data
+about your data: where it came from, what it represents, how to use it,
+etc.) and make sure it can be indexed by search engines so that people
+can find it.</li>
+<li>
+<strong>Don’t break the Internet</strong>. Not all web sites are
+designed to withstand thousands of requests per second. If you are
+writing a recursive scraper (i.e. that follows hyperlinks), test it on a
+smaller dataset first to make sure it does what it is supposed to do.
+Adjust the settings of your scraper to allow for a delay between
+requests. More on this topic in the next episode.</li>
 </ol><div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -891,8 +901,8 @@ any links that you are not going to use.
   "url": "https://josenino95.github.io/web-scraping-python/hello-scraping.html",
   "identifier": "https://josenino95.github.io/web-scraping-python/hello-scraping.html",
   "dateCreated": "2024-09-23",
-  "dateModified": "2024-10-30",
-  "datePublished": "2024-10-30"
+  "dateModified": "2024-10-31",
+  "datePublished": "2024-10-31"
 }
 
   </script><script>

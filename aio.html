@@ -332,7 +332,7 @@
         
 <section id="aio-hello-scraping"><p>Content from <a href="hello-scraping.html">Hello-Scraping</a></p>
 <hr>
-<p>Last updated on 2024-10-30 |
+<p>Last updated on 2024-10-31 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/hello-scraping.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -702,7 +702,7 @@ HTML of our example.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>One way of completing the exercise is as follows.</p>
 <div class="codewrapper sourceCode" id="cb13">
@@ -814,44 +814,54 @@ on copyright.</p>
 <p>To conclude, here is a brief code of conduct you should consider when
 doing web scraping:</p>
 <ol style="list-style-type: decimal">
-<li>Ask nicely. If your project requires data from a particular
+<li>
+<strong>Ask nicely if you can access the data in another
+way</strong>. If your project requires data from a particular
 organisation, you can try asking them directly if they could provide you
 what you are looking for, or check if they have an API to access the
 data. With some luck, they will have the primary data that they used on
 their website in a structured format, saving you the trouble.</li>
-<li>Don’t download copies of documents that are clearly not public. For
-example, academic journal publishers often have very strict rules about
-what you can and what you cannot do with their databases. Mass
-downloading article PDFs is probably prohibited and can put you (or at
-the very least your friendly university librarian) in trouble. If your
-project requires local copies of documents (e.g. for text mining
-projects), special agreements can be reached with the publisher. The
-library is a good place to start investigating something like that.</li>
-<li>Check your local legislation. For example, certain countries have
-laws protecting personal information such as email addresses and phone
-numbers. Scraping such information, even from publicly avaialable web
-sites, can be illegal (e.g. in Australia).</li>
-<li>Don’t share downloaded content illegally. Scraping for personal
-purposes is usually OK, even if it is copyrighted information, as it
-could fall under the fair use provision of the intellectual property
-legislation. However, sharing data for which you don’t hold the right to
-share is illegal.</li>
-<li>Share what you can. If the data you scraped is in the public domain
-or you got permission to share it, then put it out there for other
-people to reuse it (e.g. on datahub.io). If you wrote a web scraper to
-access it, share its code (e.g. on GitHub) so that others can benefit
-from it.</li>
-<li>Don’t break the Internet. Not all web sites are designed to
-withstand thousands of requests per second. If you are writing a
-recursive scraper (i.e. that follows hyperlinks), test it on a smaller
-dataset first to make sure it does what it is supposed to do. Adjust the
-settings of your scraper to allow for a delay between requests. More on
-this topic on the next episode.</li>
-<li>Publish your own data in a reusable way. Don’t force others to write
-their own scrapers to get at your data. Use open and software-agnostic
-formats (e.g. JSON, XML), provide metadata (data about your data: where
-it came from, what it represents, how to use it, etc.) and make sure it
-can be indexed by search engines so that people can find it.</li>
+<li>
+<strong>Don’t download copies of documents that are clearly not
+public</strong>. For example, academic journal publishers often have
+very strict rules about what you can and what you cannot do with their
+databases. Mass downloading article PDFs is probably prohibited and can
+put you (or at the very least your friendly university librarian) in
+trouble. If your project requires local copies of documents (e.g. for
+text mining projects), special agreements can be reached with the
+publisher. The library is a good place to start investigating something
+like that.</li>
+<li>
+<strong>Check your local legislation</strong>. For example, certain
+countries have laws protecting personal information such as email
+addresses and phone numbers. Scraping such information, even from
+publicly avaialable web sites, can be illegal (e.g. in Australia).</li>
+<li>
+<strong>Don’t share downloaded content illegally</strong>. Scraping
+for personal purposes is usually OK, even if it is copyrighted
+information, as it could fall under the fair use provision of the
+intellectual property legislation. However, sharing data for which you
+don’t hold the right to share is illegal.</li>
+<li>
+<strong>Share what you can</strong>. If the data you scraped is in
+the public domain or you got permission to share it, then put it out
+there for other people to reuse it (e.g. on datahub.io). If you wrote a
+web scraper to access it, share its code (e.g. on GitHub) so that others
+can benefit from it.</li>
+<li>
+<strong>Publish your own data in a reusable way</strong>. Don’t
+force others to write their own scrapers to get at your data. Use open
+and software-agnostic formats (e.g. JSON, XML), provide metadata (data
+about your data: where it came from, what it represents, how to use it,
+etc.) and make sure it can be indexed by search engines so that people
+can find it.</li>
+<li>
+<strong>Don’t break the Internet</strong>. Not all web sites are
+designed to withstand thousands of requests per second. If you are
+writing a recursive scraper (i.e. that follows hyperlinks), test it on a
+smaller dataset first to make sure it does what it is supposed to do.
+Adjust the settings of your scraper to allow for a delay between
+requests. More on this topic in the next episode.</li>
 </ol>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
@@ -879,7 +889,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-a-real-website"><p>Content from <a href="a-real-website.html">Scraping a real website</a></p>
 <hr>
-<p>Last updated on 2024-10-29 |
+<p>Last updated on 2024-10-31 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/a-real-website.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1441,13 +1451,20 @@ understand, display, and index the page. Each of this
 of workshops, for example, a well formatted start and end date, the
 exact location of the workshop with latitude and longitude (for those
 not online), the language in which it will be taught, and a more
-structured way of listing instructors and helpers. This is precisely the
-information we will extract with the following code.</p>
+structured way of listing instructors and helpers. Each of these data
+points can be identified by the the “name” attribute in the
+<code>&lt;meta&gt;</code> tags, and the information we want to extract
+is the value in the “content” attribute.</p>
+<p>The following code automates the process of getting this data from
+each website, for the first five workshops in our
+<code>upcomingworkshops_df</code> dataframe. We will only do it for five
+workshops to not send too many requests overwhelming the server, but we
+could also do it for all the workshops.</p>
 <div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># List of URLs in our dataframe</span></span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>urls <span class="op">=</span> <span class="bu">list</span>(upcomingworkshops_df.loc[:, <span class="st">'link'</span>])</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>urls <span class="op">=</span> <span class="bu">list</span>(upcomingworkshops_df.loc[:<span class="dv">5</span>, <span class="st">'link'</span>])</span>
 <span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a></span>
 <span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co"># Start an empty list to store the different dictionaries with our data</span></span>
 <span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>list_of_workshops <span class="op">=</span> []</span>
@@ -1465,8 +1482,8 @@ information we will extract with the following code.</p>
 <span id="cb22-17"><a href="#cb22-17" tabindex="-1"></a>    dict_w[<span class="st">'link'</span>] <span class="op">=</span> item</span>
 <span id="cb22-18"><a href="#cb22-18" tabindex="-1"></a></span>
 <span id="cb22-19"><a href="#cb22-19" tabindex="-1"></a>    <span class="co"># Use the find function to search for the &lt;meta&gt; tag that </span></span>
-<span id="cb22-20"><a href="#cb22-20" tabindex="-1"></a>    <span class="co"># has each specific name attribute and get the value in the</span></span>
-<span id="cb22-21"><a href="#cb22-21" tabindex="-1"></a>    <span class="co"># content attribute</span></span>
+<span id="cb22-20"><a href="#cb22-20" tabindex="-1"></a>    <span class="co"># has each specific 'name' attribute and get the value in the</span></span>
+<span id="cb22-21"><a href="#cb22-21" tabindex="-1"></a>    <span class="co"># 'content' attribute</span></span>
 <span id="cb22-22"><a href="#cb22-22" tabindex="-1"></a>    dict_w[<span class="st">'startdate'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span>{<span class="st">'name'</span>: <span class="st">'startdate'</span>})[<span class="st">'content'</span>]</span>
 <span id="cb22-23"><a href="#cb22-23" tabindex="-1"></a>    dict_w[<span class="st">'enddate'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span>{<span class="st">'name'</span>: <span class="st">'enddate'</span>})[<span class="st">'content'</span>]</span>
 <span id="cb22-24"><a href="#cb22-24" tabindex="-1"></a>    dict_w[<span class="st">'language'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span>{<span class="st">'name'</span>: <span class="st">'language'</span>})[<span class="st">'content'</span>]</span>
@@ -1492,8 +1509,9 @@ information we will extract with the following code.</p>
 <p>It is possible that you received an error when executing the previous
 block code, and the most probable reason is that the URL your tried to
 visit didn’t exist. This is known as 404 code error, that indicates the
-requested page cannot be found on the server. What would be your
-approach to work around this possible error?</p>
+requested page doesn’t exist, or more precisely, it cannot be found on
+the server. What would be your approach to work around this possible
+error?</p>
 </div>
 </div>
 </div>
@@ -1659,8 +1677,8 @@ any links that you are not going to use.
   "url": "https://josenino95.github.io/web-scraping-python/aio.html",
   "identifier": "https://josenino95.github.io/web-scraping-python/aio.html",
   "dateCreated": "2024-09-23",
-  "dateModified": "2024-10-30",
-  "datePublished": "2024-10-30"
+  "dateModified": "2024-10-31",
+  "datePublished": "2024-10-31"
 }
 
   </script><script>
