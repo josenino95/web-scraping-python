@@ -25,7 +25,7 @@ We'll refresh some of the concepts covered there to have a practical understandi
 
 ## HTML quick overview
 
-All websites have a Hypertext Markup Language (HTML) document behind them. The following text is HTML for a very simple website, with only three sentences. If you read it, can you imagine how that website looks?
+All websites have a Hypertext Markup Language (HTML) document behind them. The following text is HTML for a very simple website, with only three sentences. If you look at it, can you imagine how that website looks?
 
 ```html
 <!DOCTYPE html>
@@ -291,6 +291,32 @@ print(links_df)
 ```
 
 You'll find more useful information about the BeautifulSoup package and how to use all its methods in the [Beautiful Soup Documentation website](https://beautiful-soup-4.readthedocs.io/en/latest/).
+
+## The rights, wrongs, and legal barriers to scraping 
+
+The internet is no longer what it used to be. Once an open and boundless source of information, the web has become an invaluable pool of data, widely used by companies to train machine learning and generative AI models. Now, social media platforms and other website owners have either recognized the potential for profit and licensed their data or have become overwhelmed by bots crawling their sites and straining their server resources.
+
+For this reason, it’s now more common to see that a website's Terms of Service (TOS) explicitly prohibits web scraping. If we want to avoid getting into trouble, we need to carefully check the TOS of your website of interest as well as its 'robots.txt' file. You should be able to find both using your preferred search engine, but you may directly go to the latter by appending '/robots.txt' at the root URL of the website (e.g. for Facebook you'll find it in 'https://facebook.com/robots.txt', not in any other URL like 'https://facebook.com/user/robots.txt').
+
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+Visit [Facebook's Terms of Service](https://www.facebook.com/terms.php) and its [robots.txt file](https://facebook.com/robots.txt). What do they say about web scraping or collecting data using automated means? Compare it to [Reddit's TOS](https://redditinc.com/policies/user-agreement-september-25-2023) and [Reddit's robots.txt](https://www.reddit.com/robots.txt).
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+Besides checking the website's policies, you should also be aware of the legislation applicable to your location regarding copyright and data privacy laws. If you plan to start harvesting a large amount of data for research or commercial purposes, you should probably seek legal advice first. If you work in a university, chances are it has a copyright office that will help you sort out the legal aspects of your project. The university library is often the best place to start looking for help on copyright.
+
+To conclude, here is a brief code of conduct you should consider when doing web scraping:
+
+
+1. **Ask nicely if you can access the data in another way**. If your project requires data from a particular organisation, you can try asking them directly if they could provide you what you are looking for, or check if they have an API to access the data. With some luck, they will have the primary data that they used on their website in a structured format, saving you the trouble.
+1. **Don’t download copies of documents that are clearly not public**. For example, academic journal publishers often have very strict rules about what you can and what you cannot do with their databases. Mass downloading article PDFs is probably prohibited and can put you (or at the very least your friendly university librarian) in trouble. If your project requires local copies of documents (e.g. for text mining projects), special agreements can be reached with the publisher. The library is a good place to start investigating something like that.
+1. **Check your local legislation**. For example, certain countries have laws protecting personal information such as email addresses and phone numbers. Scraping such information, even from publicly avaialable web sites, can be illegal (e.g. in Australia).
+1. **Don’t share downloaded content illegally**. Scraping for personal purposes is usually OK, even if it is copyrighted information, as it could fall under the fair use provision of the intellectual property legislation. However, sharing data for which you don’t hold the right to share is illegal.
+1. **Share what you can**. If the data you scraped is in the public domain or you got permission to share it, then put it out there for other people to reuse it (e.g. on datahub.io). If you wrote a web scraper to access it, share its code (e.g. on GitHub) so that others can benefit from it.
+1. **Publish your own data in a reusable way**. Don’t force others to write their own scrapers to get at your data. Use open and software-agnostic formats (e.g. JSON, XML), provide metadata (data about your data: where it came from, what it represents, how to use it, etc.) and make sure it can be indexed by search engines so that people can find it.
+1. **Don’t break the Internet**. Not all web sites are designed to withstand thousands of requests per second. If you are writing a recursive scraper (i.e. that follows hyperlinks), test it on a smaller dataset first to make sure it does what it is supposed to do. Adjust the settings of your scraper to allow for a delay between requests. More on this topic in the next episode.
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 

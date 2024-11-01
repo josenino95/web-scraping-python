@@ -360,11 +360,13 @@ soup = BeautifulSoup(cleaned_req, 'html.parser')
 print(soup.prettify())
 ```
 
-If we explore the HTML this way, or using the 'View page source' in the browser, we notice something interesting in the `<head>` element. As this information is inside `<head>` instead of the `<body>` element, it won't be displayed in our browser when we visit the page, but the meta elements will provide metadata for search engines to better understand, display, and index the page. Each of this `<meta>` tags contain useful information for our table of workshops, for example, a well formatted start and end date, the exact location of the workshop with latitude and longitude (for those not online), the language in which it will be taught, and a more structured way of listing instructors and helpers. This is precisely the information we will extract with the following code.
+If we explore the HTML this way, or using the 'View page source' in the browser, we notice something interesting in the `<head>` element. As this information is inside `<head>` instead of the `<body>` element, it won't be displayed in our browser when we visit the page, but the meta elements will provide metadata for search engines to better understand, display, and index the page. Each of this `<meta>` tags contain useful information for our table of workshops, for example, a well formatted start and end date, the exact location of the workshop with latitude and longitude (for those not online), the language in which it will be taught, and a more structured way of listing instructors and helpers. Each of these data points can be identified by the the "name" attribute in the `<meta>` tags, and the information we want to extract is the value in the "content" attribute.
+
+The following code automates the process of getting this data from each website, for the first five workshops in our `upcomingworkshops_df` dataframe. We will only do it for five workshops to not send too many requests overwhelming the server, but we could also do it for all the workshops.
 
 ```python
 # List of URLs in our dataframe
-urls = list(upcomingworkshops_df.loc[:, 'link'])
+urls = list(upcomingworkshops_df.loc[:5, 'link'])
 
 # Start an empty list to store the different dictionaries with our data
 list_of_workshops = []
@@ -382,14 +384,14 @@ for item in tqdm(urls):
     dict_w['link'] = item
 
     # Use the find function to search for the <meta> tag that 
-    # has each specific name attribute and get the value in the
-    # content attribute
-    dict_w['startdate'] = soup.find('meta', attrs ={'name': 'startdate'})['content']
-    dict_w['enddate'] = soup.find('meta', attrs ={'name': 'enddate'})['content']
-    dict_w['language'] = soup.find('meta', attrs ={'name': 'language'})['content']
-    dict_w['latlng'] = soup.find('meta', attrs ={'name': 'latlng'})['content']
-    dict_w['instructor'] = soup.find('meta', attrs ={'name': 'instructor'})['content']
-    dict_w['helper'] = soup.find('meta', attrs ={'name': 'helper'})['content']
+    # has each specific 'name' attribute and get the value in the
+    # 'content' attribute
+    dict_w['startdate'] = soup.find('meta', attrs = {'name': 'startdate'})['content']
+    dict_w['enddate'] = soup.find('meta', attrs = {'name': 'enddate'})['content']
+    dict_w['language'] = soup.find('meta', attrs = {'name': 'language'})['content']
+    dict_w['latlng'] = soup.find('meta', attrs = {'name': 'latlng'})['content']
+    dict_w['instructor'] = soup.find('meta', attrs = {'name': 'instructor'})['content']
+    dict_w['helper'] = soup.find('meta', attrs = {'name': 'helper'})['content']
 
     # Append to our list
     list_of_workshops.append(dict_w)
@@ -402,7 +404,7 @@ extradata_upcoming_df = pd.DataFrame(list_of_workshops)
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-It is possible that you received an error when executing the previous block code, and the most probable reason is that the URL your tried to visit didn't exist. This is known as 404 code error, that indicates the requested page cannot be found on the server. What would be your approach to work around this possible error?
+It is possible that you received an error when executing the previous block code, and the most probable reason is that the URL your tried to visit didn't exist. This is known as 404 code error, that indicates the requested page doesn't exist, or more precisely, it cannot be found on the server. What would be your approach to work around this possible error?
 
 :::::::::::::::::::::::: solution
 
