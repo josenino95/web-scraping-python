@@ -300,7 +300,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Dynamic websites</h1>
-        <p>Last updated on 2024-10-31 |
+        <p>Last updated on 2024-11-01 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/dynamic-websites.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -378,7 +378,168 @@ need a different approach to scrape these types of websites. For this,
 we will use the <code>Selenium</code> package. But don’t forget about
 the “Inspect” tool we just learned, it will be handy when scraping.</p>
 </section><section><h2 class="section-heading" id="using-selenium-to-scrape-dynamic-websites">Using Selenium to scrape dynamic websites<a class="anchor" aria-label="anchor" href="#using-selenium-to-scrape-dynamic-websites"></a></h2>
-<hr class="half-width"><div id="keypoints1" class="callout keypoints">
+<hr class="half-width"><p><a href="https://www.selenium.dev/" class="external-link">Selenium</a> is an open source
+project for web browser automation. It will be useful for our scraping
+tasks as it will act as a real user interacting with a webpage in a
+browser. This way, Selenium will render pages in a browser environment,
+allowing JavaScript to load dynamic content, and therefore giving us
+access to the website HTML after JavaScript has executed. Additionally,
+this package simulates real user interactions like filling in text
+boxes, clicking, scrolling, or selecting drop-down menus, which will be
+useful when we scrape dynamic websites.</p>
+<p>To use it, we’ll load “webdriver” and “By” from the
+<code>selenium</code> package. webdriver open or simulate a web browser,
+interacting with it based on the instructions we give. By will allow us
+to specify how we will select a given element in the HTML, by tag (using
+“By.TAG_NAME”) or by attributes like class (“By.CLASS_NAME”), id
+(“By.ID”), or name (“By.NAME”). We will also load the other packages we
+used in the previous episode.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="im">from</span> time <span class="im">import</span> sleep</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="im">from</span> selenium <span class="im">import</span> webdriver</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="im">from</span> selenium.webdriver.common.by <span class="im">import</span> By</span></code></pre>
+</div>
+<p>Selenium can simulate multiple multiple browsers like Chrome,
+Firefox, Safari, etc. For now, we’ll use Chrome. When you run the
+following line of code, you’ll notice that a Google Chrome window opens
+up. Don’t close it, as this is how Selenium interacts with the browser.
+Later we’ll see how to do <em>headless</em> browser interactions,
+headless meaning that browser interactions will happen in the
+background, without opening a new browser window or user interface.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>driver <span class="op">=</span> webdriver.Chrome()</span></code></pre>
+</div>
+<p>Now, to tell the browser to visit our Oscar winners page, use the
+<code>.get()</code> method on the <code>driver</code> object we just
+created.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>driver.get(<span class="st">"https://www.scrapethissite.com/pages/ajax-javascript/"</span>)</span></code></pre>
+</div>
+<p>How can we direct Selenium to click the text “2015” for the table of
+that year tho show up? First, we need to find that element, in a similar
+way to how we find elements with BeautifulSoup. Just like we used
+<code>.find()</code> in BeautifulSoup to find the first element that
+matched the specified criteria, in Selenium we have
+<code>.find_element()</code>. Likewise, as we used
+<code>.find_all()</code> in BeautifulSoup to return a list of all
+coincidences for our search criteria, we can use
+<code>.find_elements()</code> in Selenium. But the syntax of how we
+specify the search paramenters will be a little different.</p>
+<p>If we wanted to search a table element that has the
+<code>&lt;table&gt;</code> tag, we would run
+<code>driver.find_element(by=By.TAG_NAME, value="table")</code>. If we
+wanted to search an element with a specific value in the “class”
+attribute, for example an element like
+<code>&lt;tr class="film"&gt;</code> we would run
+<code>driver.find_element(by=By.CLASS_NAME, value="film")</code>. To
+know what element we need to click to open “2015” table of Oscar winners
+we can use the “Inspect” tool (remember you can do this in Google Chrome
+by pointing your mouse over the “2015” value, make a right-click, and
+select “Inspect” from the pop-up menu). In the DevTools window, you’ll
+see element
+<code>&lt;a href="#" class="year-link" id="2015"&gt;2015&lt;/a&gt;</code>.
+As the ID attribute is unique for only one element in the HTML, we can
+directly select the element by this attribute using the code you’ll find
+after the following image.</p>
+<figure><img src="../fig/inspect_element.png" alt="A screenshot of Google Chrome web browser, showing how to search a specific element by using Inspect from the Chrome DevTools" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>button_2015 <span class="op">=</span> driver.find_element(by<span class="op">=</span>By.ID, value<span class="op">=</span><span class="st">"2015"</span>)</span></code></pre>
+</div>
+<p>We’ve located the hyperlink element we want to click to get the table
+for that year, and on that element we will use the <code>.click()</code>
+method to interact with it. As the table takes a couple of seconds to
+load, we will also use the <code>sleep()</code> function from the “time”
+module to wait will the JavaScript runs and the table loads. Then, we
+use <code>driver.page_source</code> for Selenium to get the HTML
+document from the website, and we store it in a variable called
+<code>html_2015</code>. Finally, we close the web browser that Selenium
+was using with <code>driver.quit()</code>.</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>button_2015.click()</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>sleep(<span class="dv">3</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>html_2015 <span class="op">=</span> driver.page_source</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>driver.quit()</span></code></pre>
+</div>
+<p>Importantly, the HTML document we stored in <code>html_2015</code>
+<strong>is the HTML after the dynamic content loaded</strong>, so it
+will contain the table values for 2015 that weren’t there originally and
+that we wouldn’t be able to see if we had used the <code>requests</code>
+package instead.</p>
+<p>We could continue using Selenium and its <code>.find_element()</code>
+and <code>.find_elements()</code> methods to to extract our data of
+interest. But instead, we will use BeautifulSoup to parse the HTML and
+find elements, as we already have some practice using it. If we search
+for the first element with class attribute equal to “film-title” and
+return the text inside it, we see that this HTML has the “Spotlight”
+movie.</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_2015, <span class="st">'html.parser'</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="bu">print</span>(soup.find(class_<span class="op">=</span><span class="st">'film'</span>).prettify())</span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="op">&lt;</span>tr <span class="kw">class</span><span class="op">=</span><span class="st">"film"</span><span class="op">&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a> <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">"film-title"</span><span class="op">&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  Spotlight</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a> <span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a> <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">"film-nominations"</span><span class="op">&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="dv">6</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a> <span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a> <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">"film-awards"</span><span class="op">&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>  <span class="dv">2</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a> <span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a> <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">"film-best-picture"</span><span class="op">&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>  <span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">"glyphicon glyphicon-flag"</span><span class="op">&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>  <span class="op">&lt;/</span>i<span class="op">&gt;</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a> <span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="op">&lt;/</span>tr<span class="op">&gt;</span></span></code></pre>
+</div>
+</section><div class="section level1">
+<h1 id="the-scraping-pipeline">The scraping pipeline<a class="anchor" aria-label="anchor" href="#the-scraping-pipeline"></a></h1>
+<p>By now, you’ve learned about the core tools for web scraping:
+requests, BeautifulSoup, and Selenium. These three tools form a
+versatile pipeline for almost any web scraping task. When starting a new
+scraping project, there are several important steps to follow that will
+help ensure you capture the data you need.</p>
+<p>The first step is <strong>understanding the website
+structure</strong>. Every website is different and structures data in
+its own particular way. Spend some time exploring the site and
+identifying the HTML elements that contain the information you want.
+Next, <strong>determine if the content is static or dynamic</strong>.
+Static content can be directly accessed from the HTML source code using
+requests and BeautifulSoup, while dynamic content often requires
+Selenium to load JavaScript on the page before BeautifulSoup can parse
+it.</p>
+<p>Once you know how the website presents its data, <strong>start
+building your pipeline</strong>. If the content is static, make a
+<code>requests</code> call to get the HTML document, and use
+<code>BeautifulSoup</code> to locate and extract the necessary elements.
+If the content is dynamic, use <code>Selenium</code> to load the page
+fully, perform any interactions (like clicking or scrolling), and then
+pass the rendered HTML to <code>BeautifulSoup</code> for parsing and
+extracing the necessary elements. Finally, <strong>format and store the
+data</strong> in a structured way that’s useful for your specific
+project and that makes it easy to analyse later.</p>
+<p>This scraping pipeline helps break down complex scraping tasks into
+manageable steps and allows you to adapt the tools based on the
+website’s unique features. With practice, you’ll be able to efficiently
+combine these tools to extract valuable data from almost any
+website.</p>
+<div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
 </div>
@@ -400,7 +561,11 @@ locally</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-</section></div> <!-- / div.lesson-content -->
+</div>
+
+
+
+      </div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="../instructor/a-real-website.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
         <a class="chapter-link float-end" href="../instructor/index.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
@@ -458,8 +623,8 @@ any links that you are not going to use.
   "url": "https://josenino95.github.io/web-scraping-python/instructor/dynamic-websites.html",
   "identifier": "https://josenino95.github.io/web-scraping-python/instructor/dynamic-websites.html",
   "dateCreated": "2024-09-23",
-  "dateModified": "2024-10-31",
-  "datePublished": "2024-10-31"
+  "dateModified": "2024-11-01",
+  "datePublished": "2024-11-01"
 }
 
   </script><script>
