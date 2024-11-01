@@ -386,12 +386,12 @@ for item in tqdm(urls):
     # Use the find function to search for the <meta> tag that 
     # has each specific 'name' attribute and get the value in the
     # 'content' attribute
-    dict_w['startdate'] = soup.find('meta', attrs ={'name': 'startdate'})['content']
-    dict_w['enddate'] = soup.find('meta', attrs ={'name': 'enddate'})['content']
-    dict_w['language'] = soup.find('meta', attrs ={'name': 'language'})['content']
-    dict_w['latlng'] = soup.find('meta', attrs ={'name': 'latlng'})['content']
-    dict_w['instructor'] = soup.find('meta', attrs ={'name': 'instructor'})['content']
-    dict_w['helper'] = soup.find('meta', attrs ={'name': 'helper'})['content']
+    dict_w['startdate'] = soup.find('meta', attrs = {'name': 'startdate'})['content']
+    dict_w['enddate'] = soup.find('meta', attrs = {'name': 'enddate'})['content']
+    dict_w['language'] = soup.find('meta', attrs = {'name': 'language'})['content']
+    dict_w['latlng'] = soup.find('meta', attrs = {'name': 'latlng'})['content']
+    dict_w['instructor'] = soup.find('meta', attrs = {'name': 'instructor'})['content']
+    dict_w['helper'] = soup.find('meta', attrs = {'name': 'helper'})['content']
 
     # Append to our list
     list_of_workshops.append(dict_w)
