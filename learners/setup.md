@@ -2,54 +2,21 @@
 title: Setup
 ---
 
-FIXME: 
-- Python, Jupyter notebook, libraries: b4s, requests, selenium, pandas
-- Google Chrome
+In this workshop you will learn how to extract data from websites, what you'd call web scraping, using Python. In Episode 1 we begin by reviewing the structure of websites in HTML and how to retrieve information from it using your browser and the `BeautifulSoup` package. In Episode 2 we'll dive deep on how to get the HTML behind any website using the `requests` package and how to parse and find information with `BeautifulSoup`. At the end,you’ll learn about the differences between static and dynamic webpages, and how to scrape the latter with the `Selenium` package.
 
-## Data Sets
+This workshop is designed for participants who already have a basic understanding of Python programming. In particular, it's best to know how to:
 
-<!--
-FIXME: place any data you want learners to use in `episodes/data` and then use
-       a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
-       link to it, replacing the example.com link.
--->
-Download the [data zip file](https://example.com/FIXME) and unzip it to your Desktop
+- Install and import packages and modules
+- Use lists and dictionaries
+- Use conditional statements (`if`, `else`, `elif`)
+- Use `for` loops
+- Calling functions, understanding parameters/arguments and return values
 
 ## Software Setup
 
-::::::::::::::::::::::::::::::::::::::: discussion
+Steps:
 
-### Details
-
-Setup for different systems can be presented in dropdown menus via a `spoiler`
-tag. They will join to this discussion block, so you can give a general overview
-of the software used in this lesson here and fill out the individual operating
-systems (and potentially add more, e.g. online setup) in the solutions blocks.
-
-:::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::: spoiler
-
-### Windows
-
-Use PuTTY
-
-::::::::::::::::::::::::
-
-:::::::::::::::: spoiler
-
-### MacOS
-
-Use Terminal.app
-
-::::::::::::::::::::::::
-
-
-:::::::::::::::: spoiler
-
-### Linux
-
-Use Terminal
-
-::::::::::::::::::::::::
-
+1. If you already have Anaconda, Jupyter Lab or Jupyter Notebooks installed in your computer, skip to step 2. Follow Miniforge's [download](https://github.com/conda-forge/miniforge?tab=readme-ov-file#download) and [installation](https://github.com/conda-forge/miniforge?tab=readme-ov-file#install) instructions for your respective operating system. If you are using a Windows machine, make sure you mark the option to "Add Miniforge3 to my PATH environment variable".
+2. If you are using Mac or Linux, open the 'Terminal'. If you are using Windows, open the 'Command Prompt' or 'Miniforge Prompt'.
+3. Activate the base conda environment by typing and running the 'conda activate' command.
+4. Install the necessary packages running 'pip install requests beautifulsoup4 selenium webdriver-manager pandas tqdm jupyterlab'.

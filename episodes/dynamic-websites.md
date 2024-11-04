@@ -6,14 +6,17 @@ exercises: 5
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How do you write a lesson using Markdown and `{sandpaper}`?
+- What are the differences between static and dynamic websites?
+- Why is it important to understand these differences when doing web scraping?
+- How can I start my own web scraping project?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with The Carpentries Workbench
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Use the `Selenium` package to scrape dynamic websites.
+- Identify the elements of interest using the browser's "Inspect" tool.
+- Understand the usual pipeline of a web scraping project.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -257,11 +260,17 @@ This scraping pipeline helps break down complex scraping tasks into manageable s
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
-
+- Dynamic websites load content using JavaScript, which isn't present in the initial or source HTML. It's important to distinguish between static and dynamic content when planning your scraping approach.
+- The `Selenium` package and its `webdriver` module simulate a real user interacting with a browser, allowing it to execute JavaScript and clicking, scrolling or filling in text boxes.
+- Here are the commandand we learned when we use `Selenium`:
+  - `webdriver.Chrome()` # Start the Google Chrome browser simulator
+  - `.get("website_url")` # Go to a given website
+  - `.find_element(by, value)` and `.find_elements(by, value)` # Get a given element
+  - `.click()` # Click the element selected
+  - `.page_source` # Get the HTML after JavaScript has executed, which can later be parsed with BeautifulSoup
+  - `.quit()` # Close the browser simulator
+- The browser's "Inspect" tool allows users to view the HTML document after dynamic content has loaded, revealing elements added by JavaScript. This tool helps identify the specific elements you are interested in scraping.
+- A typical scraping pipeline involves understanding the website's structure, determining content type (static or dynamic), using the appropriate tools (requests and BeautifulSoup for static, Selenium and BeautifulSoup for dynamic), and structuring the scraped data for analysis.
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 [r-markdown]: https://rmarkdown.rstudio.com/
