@@ -20,12 +20,12 @@ Steps:
 2. If you are using Mac or Linux, open the 'Terminal'. If you are using Windows, open the 'Command Prompt' or 'Miniforge Prompt'.
 3. Activate the base conda environment by typing and running the code below to activate your environment.
 
-```
+```markdown
 conda activate
 ```
 
 4. Install the necessary packages by running:
-```
+```markdown
 pip install 'requests' 'beautifulsoup4' 'selenium' 'webdriver-manager' 'pandas' 'tqdm' 'jupyterlab'
 ```
 
