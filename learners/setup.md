@@ -19,14 +19,14 @@ Steps:
 1. If you already have Anaconda, Jupyter Lab or Jupyter Notebooks installed in your computer, skip to step 2. Follow Miniforge's [download](https://github.com/conda-forge/miniforge?tab=readme-ov-file#download) and [installation](https://github.com/conda-forge/miniforge?tab=readme-ov-file#install) instructions for your respective operating system. If you are using a Windows machine, make sure you mark the option to "Add Miniforge3 to my PATH environment variable".
 2. If you are using Mac or Linux, open the 'Terminal'. If you are using Windows, open the 'Command Prompt' or 'Miniforge Prompt'.
 3. Activate the base conda environment by typing and running the code below to activate your environment.
-~~~
+
+```
 conda activate
-~~~
-{: .source}
+```
 
 4. Install the necessary packages by running:
-~~~
+```
 pip install 'requests' 'beautifulsoup4' 'selenium' 'webdriver-manager' 'pandas' 'tqdm' 'jupyterlab'
-~~~
-{: .source}
+```
+
 
