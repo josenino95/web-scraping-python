@@ -21,9 +21,12 @@ Steps:
 3. Activate the base conda environment by typing and running the code below to activate your environment.
 ~~~
 conda activate
-~~~ 
+~~~
+{: .source}
+
 4. Install the necessary packages by running:
 ~~~
 pip install 'requests' 'beautifulsoup4' 'selenium' 'webdriver-manager' 'pandas' 'tqdm' 'jupyterlab'
 ~~~
+{: .source}
 
