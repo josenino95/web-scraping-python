@@ -6,14 +6,16 @@ exercises: 15
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How do you write a lesson using Markdown and `{sandpaper}`?
+- How can I get the data and information from a real website?
+- How can I start automating my web scraping tasks?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with The Carpentries Workbench
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Use the `requests` package to get the HTML document behind a website.
+- Navigate the tree structure behind an HTML document to extract the information we need.
+- Know how to avoid being blocked by sending too much requests to a website.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -139,7 +141,7 @@ print(workshops_table.prettify())
 </table>
 ```
 
-To navigate in this HTML document tree we can use the methods `.contents()` (to access direct children nodes), `.parent()` (to access the parent node), `.next_sibling()`, and `.previous_sibling()` (to access the siblings of a node) methods. For example, if we want to access the second row of the table, which is the second child of the table element we could use the following code.
+To navigate in this HTML document tree we can use the following properties of the "bs4.element.Tag" object: `.contents` (to access direct children nodes), `.parent` (to access the parent node), `.next_sibling`, and `.previous_sibling` (to access the siblings of a node) methods. For example, if we want to access the second row of the table, which is the second child of the table element we could use the following code.
 
 ```python
 # The second [1 in Python indexing] child of our table element
@@ -424,10 +426,9 @@ print(req.status_code)
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- We can get the HTML behind any website using the "requests" package and the function `requests.get('website_url').text`.
+- An HTML document is a nested tree of elements. Therefore, from a given element, we can access its child, parent, or sibling, using `.contents`, `.parent`, `.next_sibling`, and `previous_sibling`.
+- It's polite to not send too many requests to a website in a short period of time. For that, we can use the `sleep()` function of the built-in Python module `time`. 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
