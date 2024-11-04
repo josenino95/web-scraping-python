@@ -333,36 +333,71 @@
 <section id="hello-scraping"><h2 class="section-heading"><a href="hello-scraping.html">Hello-Scraping</a></h2>
 <hr class="half-width">
 <ul>
-<li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
+<li>Every website has an HTML document behind it that gives a structure
+to its content.</li>
+<li>An HTML is composed of elements, which usually have a opening
+<code>&lt;tag&gt;</code> and a closing <code>&lt;/tag&gt;</code>.</li>
+<li>Elements can have different properties, assigned by attributes in
+the form of <code>&lt;tag attribute_name="value"&gt;</code>.</li>
+<li>We can parse any HTML document with <code>BeautifulSoup()</code> and
+find elements using the <code>.find()</code> and
+<code>.find_all()</code> methods.</li>
+<li>We can access the text of an element using the
+<code>.get_text()</code> method and the attribute values as we do with
+Python dictionaries (<code>element["attribute_name"]</code>).</li>
+<li>We must be careful to not tresspass the Terms of Service (TOS) of
+the website we are scraping.</li>
 </ul></section><section id="a-real-website"><h2 class="section-heading"><a href="a-real-website.html">Scraping a real website</a></h2>
 <hr class="half-width">
 <ul>
-<li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
+<li>We can get the HTML behind any website using the “requests” package
+and the function <code>requests.get('website_url').text</code>.</li>
+<li>An HTML document is a nested tree of elements. Therefore, from a
+given element, we can access its child, parent, or sibling, using
+<code>.contents</code>, <code>.parent</code>,
+<code>.next_sibling</code>, and <code>previous_sibling</code>.</li>
+<li>It’s polite to not send too many requests to a website in a short
+period of time. For that, we can use the <code>sleep()</code> function
+of the built-in Python module <code>time</code>.</li>
 </ul></section><section id="dynamic-websites"><h2 class="section-heading"><a href="dynamic-websites.html">Dynamic websites</a></h2>
 <hr class="half-width">
 <ul>
-<li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
+<li>Dynamic websites load content using JavaScript, which isn’t present
+in the initial or source HTML. It’s important to distinguish between
+static and dynamic content when planning your scraping approach.</li>
+<li>The <code>Selenium</code> package and its <code>webdriver</code>
+module simulate a real user interacting with a browser, allowing it to
+execute JavaScript and clicking, scrolling or filling in text
+boxes.</li>
+<li>Here are the commandand we learned when we use
+<code>Selenium</code>:
+<ul>
+<li>
+<code>webdriver.Chrome()</code> # Start the Google Chrome browser
+simulator</li>
+<li>
+<code>.get("website_url")</code> # Go to a given website</li>
+<li>
+<code>.find_element(by, value)</code> and
+<code>.find_elements(by, value)</code> # Get a given element</li>
+<li>
+<code>.click()</code> # Click the element selected</li>
+<li>
+<code>.page_source</code> # Get the HTML after JavaScript has
+executed, which can later be parsed with BeautifulSoup</li>
+<li>
+<code>.quit()</code> # Close the browser simulator</li>
+</ul>
+</li>
+<li>The browser’s “Inspect” tool allows users to view the HTML document
+after dynamic content has loaded, revealing elements added by
+JavaScript. This tool helps identify the specific elements you are
+interested in scraping.</li>
+<li>A typical scraping pipeline involves understanding the website’s
+structure, determining content type (static or dynamic), using the
+appropriate tools (requests and BeautifulSoup for static, Selenium and
+BeautifulSoup for dynamic), and structuring the scraped data for
+analysis.</li>
 </ul></section>
 </div>
     </main>
@@ -411,8 +446,8 @@ locally</li>
   "url": "https://josenino95.github.io/web-scraping-python/key-points.html",
   "identifier": "https://josenino95.github.io/web-scraping-python/key-points.html",
   "dateCreated": "2024-09-23",
-  "dateModified": "2024-11-01",
-  "datePublished": "2024-11-01"
+  "dateModified": "2024-11-04",
+  "datePublished": "2024-11-04"
 }
 
   </script><script>

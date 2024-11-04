@@ -334,10 +334,10 @@
         
 <section id="aio-hello-scraping"><p>Content from <a href="hello-scraping.html">Hello-Scraping</a></p>
 <hr>
-<p>Last updated on 2024-10-31 |
+<p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/hello-scraping.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 35 minutes</p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 50 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
@@ -349,8 +349,8 @@
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul>
-<li>How do you write a lesson using Markdown and
-<a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?</li>
+<li>What is behind a website and how can I extract its information?</li>
+<li>What is there to consider before I do web scraping?</li>
 </ul>
 </div>
 </div>
@@ -360,9 +360,12 @@
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Explain how to use markdown with The Carpentries Workbench</li>
-<li>Demonstrate how to include pieces of code, figures, and nested
-challenge blocks</li>
+<li>Identify the structure and basic components of an HTML
+document.</li>
+<li>Use BeautifulSoup to locate elements, tags, attributes and text in
+an HTML document.</li>
+<li>Understand the situations in which web scraping is not suitable for
+obtaining the desired data.</li>
 </ul>
 </div>
 </div>
@@ -705,7 +708,7 @@ HTML of our example.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>One way of completing the exercise is as follows.</p>
 <div class="codewrapper sourceCode" id="cb13">
@@ -874,14 +877,20 @@ requests. More on this topic in the next episode.</li>
 <h3 class="callout-title">Key Points</h3>
 <div class="callout-content">
 <ul>
-<li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
+<li>Every website has an HTML document behind it that gives a structure
+to its content.</li>
+<li>An HTML is composed of elements, which usually have a opening
+<code>&lt;tag&gt;</code> and a closing <code>&lt;/tag&gt;</code>.</li>
+<li>Elements can have different properties, assigned by attributes in
+the form of <code>&lt;tag attribute_name="value"&gt;</code>.</li>
+<li>We can parse any HTML document with <code>BeautifulSoup()</code> and
+find elements using the <code>.find()</code> and
+<code>.find_all()</code> methods.</li>
+<li>We can access the text of an element using the
+<code>.get_text()</code> method and the attribute values as we do with
+Python dictionaries (<code>element["attribute_name"]</code>).</li>
+<li>We must be careful to not tresspass the Terms of Service (TOS) of
+the website we are scraping.</li>
 </ul>
 </div>
 </div>
@@ -892,7 +901,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-a-real-website"><p>Content from <a href="a-real-website.html">Scraping a real website</a></p>
 <hr>
-<p>Last updated on 2024-11-01 |
+<p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/a-real-website.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 55 minutes</p>
@@ -907,8 +916,8 @@ any links that you are not going to use.
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul>
-<li>How do you write a lesson using Markdown and
-<a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?</li>
+<li>How can I get the data and information from a real website?</li>
+<li>How can I start automating my web scraping tasks?</li>
 </ul>
 </div>
 </div>
@@ -918,9 +927,12 @@ any links that you are not going to use.
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Explain how to use markdown with The Carpentries Workbench</li>
-<li>Demonstrate how to include pieces of code, figures, and nested
-challenge blocks</li>
+<li>Use the <code>requests</code> package to get the HTML document
+behind a website.</li>
+<li>Navigate the tree structure behind an HTML document to extract the
+information we need.</li>
+<li>Know how to avoid being blocked by sending too much requests to a
+website.</li>
 </ul>
 </div>
 </div>
@@ -1126,13 +1138,14 @@ information. It is also contained in the second cell of the row, as the
  &lt;/tr&gt;
 &lt;/table&gt;</code></pre>
 </div>
-<p>To navigate in this HTML document tree we can use the methods
-<code>.contents()</code> (to access direct children nodes),
-<code>.parent()</code> (to access the parent node),
-<code>.next_sibling()</code>, and <code>.previous_sibling()</code> (to
-access the siblings of a node) methods. For example, if we want to
-access the second row of the table, which is the second child of the
-table element we could use the following code.</p>
+<p>To navigate in this HTML document tree we can use the following
+properties of the “bs4.element.Tag” object: <code>.contents</code> (to
+access direct children nodes), <code>.parent</code> (to access the
+parent node), <code>.next_sibling</code>, and
+<code>.previous_sibling</code> (to access the siblings of a node)
+methods. For example, if we want to access the second row of the table,
+which is the second child of the table element we could use the
+following code.</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1292,7 +1305,7 @@ held?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>We can reuse directly the code we wrote before, changing only the URL
 we got the HTML from.</p>
@@ -1365,7 +1378,7 @@ hosts the workshop.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>To start, we can see in the HTML document that the world icon is in
 the second data cell of a row. Additionally, for those workshops that
@@ -1524,7 +1537,7 @@ error?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>A Pythonic crude way of working around any error for a given URL
 would be to use a <a href="https://docs.python.org/3/tutorial/errors.html" class="external-link">try and except
@@ -1553,14 +1566,15 @@ that page. The code you’d use to get the response code is:</p>
 <h3 class="callout-title">Key Points</h3>
 <div class="callout-content">
 <ul>
-<li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
+<li>We can get the HTML behind any website using the “requests” package
+and the function <code>requests.get('website_url').text</code>.</li>
+<li>An HTML document is a nested tree of elements. Therefore, from a
+given element, we can access its child, parent, or sibling, using
+<code>.contents</code>, <code>.parent</code>,
+<code>.next_sibling</code>, and <code>previous_sibling</code>.</li>
+<li>It’s polite to not send too many requests to a website in a short
+period of time. For that, we can use the <code>sleep()</code> function
+of the built-in Python module <code>time</code>.</li>
 </ul>
 </div>
 </div>
@@ -1571,7 +1585,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-dynamic-websites"><p>Content from <a href="dynamic-websites.html">Dynamic websites</a></p>
 <hr>
-<p>Last updated on 2024-11-01 |
+<p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/dynamic-websites.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 35 minutes</p>
@@ -1586,8 +1600,10 @@ any links that you are not going to use.
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul>
-<li>How do you write a lesson using Markdown and
-<a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?</li>
+<li>What are the differences between static and dynamic websites?</li>
+<li>Why is it important to understand these differences when doing web
+scraping?</li>
+<li>How can I start my own web scraping project?</li>
 </ul>
 </div>
 </div>
@@ -1597,9 +1613,11 @@ any links that you are not going to use.
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Explain how to use markdown with The Carpentries Workbench</li>
-<li>Demonstrate how to include pieces of code, figures, and nested
-challenge blocks</li>
+<li>Use the <code>Selenium</code> package to scrape dynamic
+websites.</li>
+<li>Identify the elements of interest using the browser’s “Inspect”
+tool.</li>
+<li>Understand the usual pipeline of a web scraping project.</li>
 </ul>
 </div>
 </div>
@@ -2019,14 +2037,42 @@ website.</p>
 <h3 class="callout-title">Key Points</h3>
 <div class="callout-content">
 <ul>
-<li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
+<li>Dynamic websites load content using JavaScript, which isn’t present
+in the initial or source HTML. It’s important to distinguish between
+static and dynamic content when planning your scraping approach.</li>
+<li>The <code>Selenium</code> package and its <code>webdriver</code>
+module simulate a real user interacting with a browser, allowing it to
+execute JavaScript and clicking, scrolling or filling in text
+boxes.</li>
+<li>Here are the commandand we learned when we use
+<code>Selenium</code>:
+<ul>
+<li>
+<code>webdriver.Chrome()</code> # Start the Google Chrome browser
+simulator</li>
+<li>
+<code>.get("website_url")</code> # Go to a given website</li>
+<li>
+<code>.find_element(by, value)</code> and
+<code>.find_elements(by, value)</code> # Get a given element</li>
+<li>
+<code>.click()</code> # Click the element selected</li>
+<li>
+<code>.page_source</code> # Get the HTML after JavaScript has
+executed, which can later be parsed with BeautifulSoup</li>
+<li>
+<code>.quit()</code> # Close the browser simulator</li>
+</ul>
+</li>
+<li>The browser’s “Inspect” tool allows users to view the HTML document
+after dynamic content has loaded, revealing elements added by
+JavaScript. This tool helps identify the specific elements you are
+interested in scraping.</li>
+<li>A typical scraping pipeline involves understanding the website’s
+structure, determining content type (static or dynamic), using the
+appropriate tools (requests and BeautifulSoup for static, Selenium and
+BeautifulSoup for dynamic), and structuring the scraped data for
+analysis.</li>
 </ul>
 </div>
 </div>
@@ -2083,8 +2129,8 @@ any links that you are not going to use.
   "url": "https://josenino95.github.io/web-scraping-python/instructor/aio.html",
   "identifier": "https://josenino95.github.io/web-scraping-python/instructor/aio.html",
   "dateCreated": "2024-09-23",
-  "dateModified": "2024-11-01",
-  "datePublished": "2024-11-01"
+  "dateModified": "2024-11-04",
+  "datePublished": "2024-11-04"
 }
 
   </script><script>

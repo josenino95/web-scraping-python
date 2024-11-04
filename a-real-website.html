@@ -118,11 +118,11 @@
   Web Scraping with Python
 </div>
 
-<aside class="col-md-12 lesson-progress"><div style="width: 28%" class="percentage">
-    28%
+<aside class="col-md-12 lesson-progress"><div style="width: 36%" class="percentage">
+    36%
   </div>
   <div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 28%" aria-valuenow="28" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar incubator" role="progressbar" style="width: 36%" aria-valuenow="36" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
     </div>
   </div>
 </aside><div class="container">
@@ -302,7 +302,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Scraping a real website</h1>
-        <p>Last updated on 2024-11-01 |
+        <p>Last updated on 2024-11-04 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/a-real-website.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -321,8 +321,8 @@
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
-<ul><li>How do you write a lesson using Markdown and
-<a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?</li>
+<ul><li>How can I get the data and information from a real website?</li>
+<li>How can I start automating my web scraping tasks?</li>
 </ul></div>
 </div>
 </div>
@@ -330,9 +330,12 @@
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Explain how to use markdown with The Carpentries Workbench</li>
-<li>Demonstrate how to include pieces of code, figures, and nested
-challenge blocks</li>
+<ul><li>Use the <code>requests</code> package to get the HTML document
+behind a website.</li>
+<li>Navigate the tree structure behind an HTML document to extract the
+information we need.</li>
+<li>Know how to avoid being blocked by sending too much requests to a
+website.</li>
 </ul></div>
 </div>
 </div>
@@ -529,13 +532,14 @@ information. It is also contained in the second cell of the row, as the
  &lt;/tr&gt;
 &lt;/table&gt;</code></pre>
 </div>
-<p>To navigate in this HTML document tree we can use the methods
-<code>.contents()</code> (to access direct children nodes),
-<code>.parent()</code> (to access the parent node),
-<code>.next_sibling()</code>, and <code>.previous_sibling()</code> (to
-access the siblings of a node) methods. For example, if we want to
-access the second row of the table, which is the second child of the
-table element we could use the following code.</p>
+<p>To navigate in this HTML document tree we can use the following
+properties of the “bs4.element.Tag” object: <code>.contents</code> (to
+access direct children nodes), <code>.parent</code> (to access the
+parent node), <code>.next_sibling</code>, and
+<code>.previous_sibling</code> (to access the siblings of a node)
+methods. For example, if we want to access the second row of the table,
+which is the second child of the table element we could use the
+following code.</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -695,7 +699,7 @@ held?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>We can reuse directly the code we wrote before, changing only the URL
 we got the HTML from.</p>
@@ -768,7 +772,7 @@ hosts the workshop.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>To start, we can see in the HTML document that the world icon is in
 the second data cell of a row. Additionally, for those workshops that
@@ -925,7 +929,7 @@ error?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>A Pythonic crude way of working around any error for a given URL
 would be to use a <a href="https://docs.python.org/3/tutorial/errors.html" class="external-link">try and except
@@ -953,14 +957,15 @@ that page. The code you’d use to get the response code is:</p>
 <div class="callout-inner">
 <h3 class="callout-title">Key Points</h3>
 <div class="callout-content">
-<ul><li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
+<ul><li>We can get the HTML behind any website using the “requests” package
+and the function <code>requests.get('website_url').text</code>.</li>
+<li>An HTML document is a nested tree of elements. Therefore, from a
+given element, we can access its child, parent, or sibling, using
+<code>.contents</code>, <code>.parent</code>,
+<code>.next_sibling</code>, and <code>previous_sibling</code>.</li>
+<li>It’s polite to not send too many requests to a website in a short
+period of time. For that, we can use the <code>sleep()</code> function
+of the built-in Python module <code>time</code>.</li>
 </ul></div>
 </div>
 </div>
@@ -1026,8 +1031,8 @@ any links that you are not going to use.
   "url": "https://josenino95.github.io/web-scraping-python/a-real-website.html",
   "identifier": "https://josenino95.github.io/web-scraping-python/a-real-website.html",
   "dateCreated": "2024-09-23",
-  "dateModified": "2024-11-01",
-  "datePublished": "2024-11-01"
+  "dateModified": "2024-11-04",
+  "datePublished": "2024-11-04"
 }
 
   </script><script>
