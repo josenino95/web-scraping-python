@@ -1,19 +1,21 @@
 ---
 title: "Hello-Scraping"
-teaching: 30
-exercises: 5
+teaching: 40
+exercises: 10
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How do you write a lesson using Markdown and `{sandpaper}`?
+- What is behind a website and how can I extract its information?
+- What is there to consider before I do web scraping?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with The Carpentries Workbench
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Identify the structure and basic components of an HTML document.
+- Use BeautifulSoup to locate elements, tags, attributes and text in an HTML document.
+- Understand the situations in which web scraping is not suitable for obtaining the desired data.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -320,10 +322,12 @@ To conclude, here is a brief code of conduct you should consider when doing web 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- Every website has an HTML document behind it that gives a structure to its content.
+- An HTML is composed of elements, which usually have a opening `<tag>` and a closing `</tag>`.
+- Elements can have different properties, assigned by attributes in the form of `<tag attribute_name="value">`.
+- We can parse any HTML document with `BeautifulSoup()` and find elements using the `.find()` and `.find_all()` methods.
+- We can access the text of an element using the `.get_text()` method and the attribute values as we do with Python dictionaries (`element["attribute_name"]`).
+- We must be careful to not tresspass the Terms of Service (TOS) of the website we are scraping.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
