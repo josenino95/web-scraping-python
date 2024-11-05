@@ -20,13 +20,29 @@ Steps:
 2. If you are using Mac or Linux, open the 'Terminal'. If you are using Windows, open the 'Command Prompt' or 'Miniforge Prompt'.
 3. Activate the base conda environment by typing and running the code below to activate your environment.
 
-```markdown
+```terminal
 conda activate
 ```
 
 4. Install the necessary packages by running:
-```markdown
-pip install 'requests' 'beautifulsoup4' 'selenium' 'webdriver-manager' 'pandas' 'tqdm' 'jupyterlab'
+```terminal
+pip install requests beautifulsoup4 selenium webdriver-manager pandas tqdm jupyterlab
 ```
 
+5. Start Jupyter Lab by running: 
+```terminal
+jupyter lab
+```
 
+6. In a new Jupyter Notebook run the following code in a cell to check the necessary libraries can be loaded:
+```python
+from bs4 import BeautifulSoup
+import requests
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+import pandas as pd
+```
+
+## Additional resources
+- Mitchell, R. (Ryan E. ). (2024). Web scraping with Python : data extraction from the modern web (3rd edition.). O’Reilly Media, Inc.
+- Chapagain, A. (2023). Hands-On Web Scraping with Python : Extract Quality Data from the Web Using Effective Python Techniques (Second edition.). Packt Publishing.
