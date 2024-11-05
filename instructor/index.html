@@ -371,22 +371,32 @@ PATH environment variable”.</li>
 Windows, open the ‘Command Prompt’ or ‘Miniforge Prompt’.</li>
 <li>Activate the base conda environment by typing and running the code
 below to activate your environment.</li>
-</ol><div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>conda activate</span></code></pre>
-</div>
+</ol><pre class="terminal"><code>conda activate</code></pre>
 <ol start="4" style="list-style-type: decimal"><li>Install the necessary packages by running:</li>
-</ol><div class="codewrapper sourceCode" id="cb2">
-<h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</ol><pre class="terminal"><code>pip install requests beautifulsoup4 selenium webdriver-manager pandas tqdm jupyterlab</code></pre>
+<ol start="5" style="list-style-type: decimal"><li>Start Jupyter Lab by running:</li>
+</ol><pre class="terminal"><code>jupyter lab</code></pre>
+<ol start="6" style="list-style-type: decimal"><li>In a new Jupyter Notebook run the following code in a cell to check
+the necessary libraries can be loaded:</li>
+</ol><div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>pip install 'requests' 'beautifulsoup4' 'selenium' 'webdriver-manager' 'pandas' 'tqdm' 'jupyterlab'</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="im">from</span> selenium <span class="im">import</span> webdriver</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="im">from</span> selenium.webdriver.common.by <span class="im">import</span> By</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre>
 </div>
-<!--
+</section><section><h2 class="section-heading" id="additional-resources">Additional resources<a class="anchor" aria-label="anchor" href="#additional-resources"></a></h2>
+<hr class="half-width"><ul><li>Mitchell, R. (Ryan E. ). (2024). Web scraping with Python : data
+extraction from the modern web (3rd edition.). O’Reilly Media, Inc.</li>
+<li>Chapagain, A. (2023). Hands-On Web Scraping with Python : Extract
+Quality Data from the Web Using Effective Python Techniques (Second
+edition.). Packt Publishing.</li>
+</ul><!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
- -->
-</section></section></main><nav class="bottom-pagination mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
+ --></section></section></main><nav class="bottom-pagination mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link float-end" href="../instructor/hello-scraping.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
@@ -435,8 +445,8 @@ any links that you are not going to use.
   "url": "https://josenino95.github.io/web-scraping-python/instructor/index.html",
   "identifier": "https://josenino95.github.io/web-scraping-python/instructor/index.html",
   "dateCreated": "2024-09-23",
-  "dateModified": "2024-11-04",
-  "datePublished": "2024-11-04"
+  "dateModified": "2024-11-05",
+  "datePublished": "2024-11-05"
 }
 
   </script><script>
