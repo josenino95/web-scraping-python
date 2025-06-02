@@ -19,33 +19,56 @@ exercises: 15
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
+It's now time to extract information from an actual website, [https://carpentries.org](https://carpentries.org), where we'll recover all upcoming and past workshops taught by The Carpentries global community.
+To give you a few ideas of how web scraping is useful in this case, we could use this data to analyze which countries have had more workshops, or build a frequently updated dashboard with recent trends in instruction, or to build an app that notifies us when there's a new workshop offered in our country.
+
+Using the basic tools shown here, you could build similar apps and analyses with the website(s) of your interest.
+But always remember the code of conduct described in the previous episode, especially the first point - there's a chance you can get the data you want more easily.
+In the example we're going to work on now, there's a [list of The Carpentries data feeds](https://feeds.carpentries.org/full_list.html) that you can use to get upcoming and past workshops.
+
 ## "Requests" the website HTML
 
-In the previous episode we used a simple HTML document, not an actual website. Now that we move to more real, complex escenario, we need to add another package to our toolbox, the `requests` package. For the purpose of this web scraping lesson, we will only use `requests` to get the HTML behind a website. However, there's a lot of extra functionality that we are not covering but you can find in the [Requests package documentation](https://requests.readthedocs.io/en/latest/).
+In the previous episode we used a simple HTML document, not an actual website.
+Now that we move to more real, complex scenario, we need to add another package to our toolbox, the `requests` package.
+For the purpose of this web scraping lesson, we will only use `requests` to get the HTML behind a website.
+However, there's a lot of extra functionality that we are not covering but you can find in the [Requests package documentation](https://requests.readthedocs.io/en/latest/).
 
-We'll be scraping The Carpentries website, [https://carpentries.org/](https://carpentries.org/), and specifically, the list of upcoming and past workshop you can find at the bottom. For that, first we'll load the `requests` package and then use the code `.get().text` to store the HTML document of the website. Furthermore, to simplify our navigation through the HTML document, we will use the [Regular Expressions](https://docs.python.org/3/howto/regex.html) `re` module to remove all new line characters ("\n") and their surrounding whitespaces. You can think of removing new lines as a preprocessing or cleaning step, but in this lesson we won't be explaining the intricacies of regular expressions. For that, you can refer to this introductory explanation on the [Library Carpentry](https://librarycarpentry.org/lc-data-intro/01-regular-expressions.html).
+We'll be scraping The Carpentries website, and specifically, the list of [upcoming](https://carpentries.org/workshops/upcoming-workshops/) and [past workshops](https://carpentries.org/workshops/past-workshops/).
+For that, first we'll load the `requests` package and then use the code `.get().text` to store the HTML document of the website.
+Furthermore, to simplify our navigation through the HTML document, we will use the [Regular Expressions](https://docs.python.org/3/howto/regex.html) `re` module to remove all new line characters ("\n") and their surrounding white spaces.
+You can think of removing new lines as a pre-processing or cleaning step, but in this lesson we won't be explaining the intricacies of regular expressions.
+For that, you can refer to this introductory explanation on the [Library Carpentry](https://librarycarpentry.org/lc-data-intro/01-regular-expressions.html).
 
 
 ```python
 import requests
 import re
-url = 'https://carpentries.org/'
+from bs4 import BeautifulSoup
+from time import sleep
+
+url = 'https://carpentries.org/workshops/upcoming-workshops/'
 req = requests.get(url).text
 cleaned_req = re.sub(r'\s*\n\s*', '', req).strip()
 print(cleaned_req[0:1000])
 ```
 
 ```output
-<!doctype html><html class="no-js" lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Carpentries</title><link rel="stylesheet" type="text/css" href="https://carpentries.org/assets/css/styles_feeling_responsive.css"><script src="https://carpentries.org/assets/js/modernizr.min.js"></script><!-- matomo --><script src="https://carpentries.org/assets/js/matomo-analytics.js"></script><link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i|Roboto:400,400i,700,700i&display=swap" rel="stylesheet"><!-- Search Engine Optimization --><meta name="description" content="The Carpentries is a fiscally sponsored project of Community Initiatives, a registered 501(c)3 non-profit organisation based in California, USA. We are a global community teaching foundational computational and data science skills to researchers in academia, industry and government."><link rel="canonical" href="https://carpentries.org/index.html"><
+<!doctype html><html class=scroll-smooth lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width"><title>Upcoming workshops | The Carpentries</title><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel=stylesheet><script defer src=https://cdn.jsdelivr.net/npm/@glidejs/glide@3.5.x></script><script src=https://kit.fontawesome.com/3a6fac633d.js crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css><script src=https://code.jquery.com/jquery-3.7.1.min.js></script><script src=https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js></script><script src=https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js></script><script src=https://cdn.datatables.net/plug-ins/1.13.6/sorting/datetime-moment.js></script><sc
 ```
 
 We truncated to print only the first 1000 characters of the document, as it is too long, but we can see it is HTML and has some elements we didn't see in the example of the previous episode, like those identified with the `<meta>`, `<link>` and `<script>` tags.
 
-There's another way to see the HTML document behind a website, directly from your web browser. Using Google Chrome, you can right-click in any part of the website (on a Mac, press and hold the Control key in your keyboard while you click), and from the pop-up menu, click 'View page source', as the next image shows. If the 'View page source' option didn't appear for you, try clicking in another part of the website. A new tab will open with the HTML document for the website you were in.
+There's another way to see the HTML document behind a website, directly from your web browser. Using Google Chrome, you can right-click in any part of the website (on a Mac, press and hold the Control key in your keyboard while you click), and from the pop-up menu, click 'View page source', as the next image shows.
+If the 'View page source' option didn't appear for you, try clicking in another part of the website. A new tab will open with the HTML document for the website you were in.
 
-![](fig/view_page_source.png){alt="A screenshot of The Carpentries homepage in the Google Chrome web browser, showing how to View page source"}
+![](fig/view_page_source.png){alt="A screenshot of The Carpentries upcoming workshops website in the Google Chrome web browser, showing how to View page source"}
 
-In the HTML page source on your browser you can scroll down and look for the second-level header (`<h2>`) with the text "Upcoming Carpentries Workshops". Or more easily, you can use the Find Bar (Ctrl + F on Windows and Command + F on Mac) to search for "Upcoming Carpentries Workshops". Just right down of that header we have the table element we are interested in, which starts with the opening tag `<table class="table table-striped" style="width: 100%;">`. Inside that element we see nested different elements familiar for a table, the rows (`<tr>`) and the cells for each row (`<td>`), and additionally the image (`<img>`) and hyperlink (`<a>`) elements.
+In the HTML page source on your browser you can scroll down and look for the first-level header (`<h1>`) with the text "Upcoming workshops". Or more easily, you can use the Find Bar (Ctrl + F on Windows and Command + F on Mac) to search for "Upcoming workshops".
+If you read from there and compare it to the rendered website, you'll see how the content is formatted from the raw HTML, using tags like unordered lists (`<ul>`), list items (`<li>`), paragraphs (`<p>`), and divisions or sections (`<div>`).
+
+However, it would take you a long while of carefully reading the HTML to understand the page structure and where the data you 
+
+CHANGE: Insert part on Chrome INSPECT
 
 ## Finding the information we want 
 
@@ -64,7 +87,7 @@ Printing only the first 1000 characters of the table element:
  <table class="table table-striped" style="width: 100%;"><tr><td><img alt="swc logo" class="flags" height="24" src="https://carpentries.org/assets/img/logos/swc.svg" title="swc workshop" width="24"/></td><td><img alt="mx" class="flags" src="https://carpentries.org/assets/img/flags/24/mx.png" title="MX"><img alt="globe image" class="flags" src="https://carpentries.org/assets/img/flags/24/w3.png" title="Online"><a href="https://galn3x.github.io/-2024-10-28-Metagenomics-online/">Nodo Nacional de BioinformÃ¡tica UNAM</a><br><b>Instructors:</b> CÃ©sar Aguilar, Diana Oaxaca, Nelly Selem-Mojica<br><b>Helpers:</b> Andreas Chavez, JosÃ© Manuel Villalobos Escobedo, Aaron Espinosa Jaime, AndrÃ©s Arredondo, Mirna VÃ¡zquez Rosas-Landa, David Alberto GarcÃ­a-Estrada</br></br></img></img></td><td>Oct 28 - Oct 31, 2024</td></tr><tr><td><img alt="dc logo" class="flags" height="24" src="https://carpentries.org/assets/img/logos/dc.svg" title="dc workshop" width="24"/></td><td><img alt="de" class="flags" s
 ```
 
-From our output we see that there was only one table element in the entire HTML, which corresponds to the table we are looking for. The output you see in the previous code block will be different from what you have in your computer, as the data in the upcoming workshops table is continously updated.
+From our output we see that there was only one table element in the entire HTML, which corresponds to the table we are looking for. The output you see in the previous code block will be different from what you have in your computer, as the data in the upcoming workshops table is continuously updated.
 
 Besides searching elements using tags, sometimes it will be useful to search using attributes, like `id` or `class`. For example, we can see the table element has a class attribute with two values "table table-striped", which identifies all possible elements with similar styling. Therefore, we could have the same result than before using the `class_` argument on the `.find_all()` method as follows.
 

@@ -2,7 +2,10 @@
 title: Setup
 ---
 
-In this workshop you will learn how to extract data from websites, what you'd call web scraping, using Python. In Episode 1 we begin by reviewing the structure of websites in HTML and how to retrieve information from it using your browser and the `BeautifulSoup` package. In Episode 2 we'll dive deep on how to get the HTML behind any website using the `requests` package and how to parse and find information with `BeautifulSoup`. At the end,you’ll learn about the differences between static and dynamic webpages, and how to scrape the latter with the `Selenium` package.
+In this workshop you will learn how to extract data from websites, what you'd call web scraping, using Python.
+In Episode 1 we begin by reviewing the structure of websites in HTML and how to retrieve information from it using your browser and the `BeautifulSoup` package.
+In Episode 2 we'll dive deep on how to get the HTML behind any website using the `requests` package and how to parse and find information with `BeautifulSoup`.
+At the end, you’ll learn about the differences between static and dynamic webpages, and how to scrape the latter with the `Selenium` package.
 
 This workshop is designed for participants who already have a basic understanding of Python programming. In particular, it's best to know how to:
 
