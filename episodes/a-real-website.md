@@ -64,105 +64,54 @@ If the 'View page source' option didn't appear for you, try clicking in another 
 ![](fig/view_page_source.png){alt="A screenshot of The Carpentries upcoming workshops website in the Google Chrome web browser, showing how to View page source"}
 
 In the HTML page source on your browser you can scroll down and look for the first-level header (`<h1>`) with the text "Upcoming workshops". Or more easily, you can use the Find Bar (Ctrl + F on Windows and Command + F on Mac) to search for "Upcoming workshops".
-If you read from there and compare it to the rendered website, you'll see how the content is formatted from the raw HTML, using tags like unordered lists (`<ul>`), list items (`<li>`), paragraphs (`<p>`), and divisions or sections (`<div>`).
+If you read from there and compare it to the rendered website, you'll see how the content is formatted from the raw HTML, using tags like unordered lists (`<ul>`), list items (`<li>`), paragraphs (`<p>`), and content divisions (`<div>`).
 
-However, it would take you a long while of carefully reading the HTML to understand the page structure and where the data you 
+## Finding the information we want
 
-CHANGE: Insert part on Chrome INSPECT
+However, it would take you a long while of carefully reading the HTML to understand the page structure and where to find the data on workshops.
+In this case, there's another useful tool available in web browsers called "Inspect".
+You can select an element of the website, right-click on top of it (on a Mac, press and hold the Control key in your keyboard while you click), and from the pop-up menu, click 'Inspect'.
+We'll do that with the first item in the 'Upcoming workshops' list, as this screenshot shows.
+(You may see a different workshop as the first item as the website is updated frequently.)
 
-## Finding the information we want 
+![](fig/inspect_workshop.png){alt="A screenshot of Google Chrome web browser, showing how to use Inspect from the Chrome DevTools"}
 
-Now, going back to our coding, we left off on getting the HTML behind the website using `requests`, and stored it on the variable called `req`. From here we can proceed with BeautifulSoup as we learned in the previous episode, using the `BeautifulSoup()` function to parse our HTML, as the following code block shows. With the parsed document, we can use the `.find()` or `find_all()` methods to find the table element.
+Using the "Inspect" feature opens DevTools on the side of your browser, offering other features for inspecting, debugging, and analyzing web pages in real-time.
+For this workshop, however, we’ll focus on just the "Elements" tab.
+If you selected the organization name to Inspect, as shown in the screenshot, in the "Elements" tabs you'll see highlighted an hyperlink element, between `<a>` tags.
+Around it, as its parent, you'll see a third-level header with `<h3>` tags.
+As mentioned in the previous episode, here you can notice the tree structure of the HTML, where elements can have children or have a parent.
+
+Going back to our coding, we left off on getting the HTML behind the website using `requests`, and stored it on the variable called `req`.
+From here we can proceed with BeautifulSoup as we learned in the previous episode, using the `BeautifulSoup()` function to parse our HTML, as the following code block shows.
+With the parsed document, we can use the `.find()` or `find_all()` methods to find all third-level headers.
 
 ```python
 soup = BeautifulSoup(cleaned_req, 'html.parser')
-tables_by_tag = soup.find_all('table')
-print("Number of table elements found: ", len(tables_by_tag))
-print("Printing only the first 1000 characters of the table element: \n", str(tables_by_tag[0])[0:1000])
+h3_by_tag = soup.find_all('h3')
+print("Number of h3 elements found: ", len(h3_by_tag))
+for n, h3 in enumerate(h3_by_tag):
+    print(f"Workshop #{n} - {h3.get_text()}")
 ```
 
-```output
-Number of table elements found:  1
-Printing only the first 1000 characters of the table element: 
- <table class="table table-striped" style="width: 100%;"><tr><td><img alt="swc logo" class="flags" height="24" src="https://carpentries.org/assets/img/logos/swc.svg" title="swc workshop" width="24"/></td><td><img alt="mx" class="flags" src="https://carpentries.org/assets/img/flags/24/mx.png" title="MX"><img alt="globe image" class="flags" src="https://carpentries.org/assets/img/flags/24/w3.png" title="Online"><a href="https://galn3x.github.io/-2024-10-28-Metagenomics-online/">Nodo Nacional de BioinformÃ¡tica UNAM</a><br><b>Instructors:</b> CÃ©sar Aguilar, Diana Oaxaca, Nelly Selem-Mojica<br><b>Helpers:</b> Andreas Chavez, JosÃ© Manuel Villalobos Escobedo, Aaron Espinosa Jaime, AndrÃ©s Arredondo, Mirna VÃ¡zquez Rosas-Landa, David Alberto GarcÃ­a-Estrada</br></br></img></img></td><td>Oct 28 - Oct 31, 2024</td></tr><tr><td><img alt="dc logo" class="flags" height="24" src="https://carpentries.org/assets/img/logos/dc.svg" title="dc workshop" width="24"/></td><td><img alt="de" class="flags" s
-```
-
-From our output we see that there was only one table element in the entire HTML, which corresponds to the table we are looking for. The output you see in the previous code block will be different from what you have in your computer, as the data in the upcoming workshops table is continuously updated.
-
-Besides searching elements using tags, sometimes it will be useful to search using attributes, like `id` or `class`. For example, we can see the table element has a class attribute with two values "table table-striped", which identifies all possible elements with similar styling. Therefore, we could have the same result than before using the `class_` argument on the `.find_all()` method as follows.
+Besides searching elements using tags, sometimes it will be useful to search using attributes, like `id` or `class`.
+For example, we can see the `h3` elements have a class attribute with multiple values "title text-base md:text-[1.75rem] leading-[2.125rem] font-semibold", which identifies all possible elements with similar styling. Therefore, we could have the same result than before using the `class_` argument on the `.find_all()` method as follows.
 
 ```python
-tables_by_class = soup.find_all(class_="table table-striped")
-```
-
-Now that we know there is only one table element, we can start working with it directly by storing the first and only item in the `tables_by_tag` result set into another variable, which we will call just `workshops`. We can see that we moved from working with a "ResultSet" object to a "Tag" object, which we can start working with to extract information from each row and cell.
-
-```python
-print("Before: ", type(tables_by_tag))
-workshops_table = tables_by_tag[0]
-print("After:", type(workshops_table))
-print("Element type:", workshops_table.name)
-```
-
-```output
-Before:  <class 'bs4.element.ResultSet'>
-After: <class 'bs4.element.Tag'>
-Element type: table
+h3_by_class = soup.find_all(class_="title text-base md:text-[1.75rem] leading-[2.125rem] font-semibold")
 ```
 
 ## Navigating the tree
 
-If we use the `prettify()` method on the `workshops_table` variable, we see that this table element has a nested tree structure. On the first level is the `<table>` tag. Inside that, we have rows `<tr>`, and inside rows we have table data cells `<td>`. We can start to identify certain information we may be interested in, for example:
+Going back to our web browser and in the "Inspect" tool, can you identify what is the parent of the first `h3` element?
+If you said, a content division element (with `<div>` tag), you are right!
+But exactly which `div` as there are so many in this website?
+Again, we can identify elements also by its class, which in this case is "p-8 mb-5 border".
 
-- What type of workshop was it ('swc' for Software Carpentry, 'dc' for Data Carpentry, 'lc' for Library Carpentry, and 'cp' for workshops based on The Carpentries curriculum). We find this in the first `<td>` tag, or said in a different way, in the first cell of the row. 
-- In what country was the workshop held. We can see the two-letter country code in the second cell of the row.
-- The URL to the workshop website, which will contain additional information. It is also contained in the second cell of the row, as the `href` attribute of the `<a>` tag.
-- The institution that is hosting the workshop. Also in the second `<td>`, in the text of the hyperlink `<a>` tag.
-- The name of instructors and helpers involved in the workshop.
-- The dates of the workshop, on the third and final cell.
+We can also find the parent with the help of BeautifulSoup.
+For this, we use `.parent` property of any "bs4.element.Tag" object with the following code
 
-```python
-print(workshops_table.prettify())
-```
-
-```output
-<table class="table table-striped" style="width: 100%;">
- <tr>
-  <td>
-   <img alt="swc logo" class="flags" height="24" src="https://carpentries.org/assets/img/logos/swc.svg" title="swc workshop" width="24"/>
-  </td>
-  <td>
-   <img alt="mx" class="flags" src="https://carpentries.org/assets/img/flags/24/mx.png" title="MX">
-    <img alt="globe image" class="flags" src="https://carpentries.org/assets/img/flags/24/w3.png" title="Online">
-     <a href="https://galn3x.github.io/-2024-10-28-Metagenomics-online/">
-      Nodo Nacional de BioinformÃ¡tica UNAM
-     </a>
-     <br>
-      <b>
-       Instructors:
-      </b>
-      CÃ©sar Aguilar, Diana Oaxaca, Nelly Selem-Mojica
-      <br>
-       <b>
-        Helpers:
-       </b>
-       Andreas Chavez, JosÃ© Manuel Villalobos Escobedo, Aaron Espinosa Jaime, AndrÃ©s Arredondo, Mirna VÃ¡zquez Rosas-Landa, David Alberto GarcÃ­a-Estrada
-      </br>
-     </br>
-    </img>
-   </img>
-  </td>
-  <td>
-   Oct 28 - Oct 31, 2024
-  </td>
- </tr>
- <tr>
-  <td>
-...
-  </td>
- </tr>
-</table>
-```
+STOPPED HERE TO CONTINUE WORKING LATER
 
 To navigate in this HTML document tree we can use the following properties of the "bs4.element.Tag" object: `.contents` (to access direct children nodes), `.parent` (to access the parent node), `.next_sibling`, and `.previous_sibling` (to access the siblings of a node) methods. For example, if we want to access the second row of the table, which is the second child of the table element we could use the following code.
 
