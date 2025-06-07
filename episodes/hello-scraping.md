@@ -240,12 +240,12 @@ Number of hyperlinks found:  2
 [<a href="https://carpentries.org/">The Carpentries homepage</a>, <a href="https://carpentries.org/past_workshops/">past workshops</a>]
 ```
 
-To access the value of a given attribute in an element, for example the value of the `href` attribute in `<a href="">`, we would use square brackets and the name of the attribute (`['href']`), just like how in a Python dictionary we would access the value using the respective key.
+To access the value of a given attribute in an element, for example the value of the `href` attribute in `<a href="">`, we would use the `.get()` method with the name of the attribute (i.e. `.get('href')`).
 Let's make a loop that prints only the URL for each hyperlink we have in our example.
 
 ```python
 for item in links:
-    print(item['href'])
+    print(item.get('href'))
 ```
 ```output
 https://carpentries.org/
@@ -271,7 +271,7 @@ One way of completing the exercise is as follows.
 ```python
 first_link = {
    'element': str(soup.find('a')),
-   'url': soup.find('a')['href'],
+   'url': soup.find('a').get('href'),
    'text': soup.find('a').get_text()
 }
 ```
@@ -281,7 +281,7 @@ An alternate but similar way is to store the tag found for not calling multiple 
 find_a = soup.find('a')
 first_link = {}
 first_link['element'] = str(find_a)
-first_link['url'] = find_a['href']
+first_link['url'] = find_a.get('href')
 first_link['text'] = find_a.get_text()
 ```
 :::::::::::::::::::::::::::::::::
@@ -299,7 +299,7 @@ list_of_dicts = []
 for item in links:
     dict_a = {}
     dict_a['element'] = str(item)
-    dict_a['url'] = item['href']
+    dict_a['url'] = item.get('href')
     dict_a['text'] = item.get_text()
     list_of_dicts.append(dict_a)
 
